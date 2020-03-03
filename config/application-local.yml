@@ -1,3 +1,7 @@
+spring:
+  application:
+    name: cards-api-simulator-service
+
 server:
   port: 14080
   tomcat:
@@ -32,3 +36,6 @@ backbase:
   security:
     http:
       enabled: false
+  api:
+    simulator:
+      basePath: /client-api/v2
