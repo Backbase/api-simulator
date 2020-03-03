@@ -1,0 +1,34 @@
+server:
+  port: 14080
+  tomcat:
+    basedir: target
+    accesslog:
+      enabled: true
+      # %D is response time in milliseconds
+      pattern: "%h %l %u %t \"%r\" %s %b (%D ms)"
+
+eureka:
+  instance:
+    nonSecurePort: ${server.port}
+    leaseRenewalIntervalInSeconds: 10
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/registry/eureka/
+    # Disable registration and fetching registry information by default, set both to true to integrate with Eureka
+    registerWithEureka: false
+    fetchRegistry: false
+
+logging:
+  file: target/logs/application.log
+  level:
+    root: INFO
+    com.backbase.api.simulator: DEBUG
+
+management:
+  server:
+    port: 24080
+
+backbase:
+  security:
+    http:
+      enabled: false

@@ -17,4 +17,28 @@
         <developerConnection>scm:git:ssh://git@stash.backbase.com:7999/ctrlsdlc/api-simulator-service.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
+
+    <properties>
+        <ctrl-shared-backend-library.version>1.0.9</ctrl-shared-backend-library.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>auth-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.dbs.ctrl</groupId>
+            <artifactId>security</artifactId>
+            <version>${ctrl-shared-backend-library.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>presentation-starter-config</artifactId>
+        </dependency>
+    </dependencies>
 </project>
