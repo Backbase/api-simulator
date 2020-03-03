@@ -40,3 +40,4 @@ backbase:
     simulator:
       prismPath: target/prism
       basePath: /client-api/v2
+      spec: /home/leandro/dev/repo/cards-api/target/openapi.yaml

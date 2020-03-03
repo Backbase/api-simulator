@@ -1,7 +1,9 @@
 package com.backbase.api.simulator.config;
 
+import java.nio.file.Path;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +21,11 @@ public class ApiSimulatorConfiguration {
     @Pattern(regexp = "/.*")
     private String basePath;
 
-    @NotBlank
-    private String prismPath;
+    @NotNull
+    private Path prismPath;
+
+    @NotNull
+    private Path spec;
 
     public int getPort() {
         return port;
@@ -38,11 +43,19 @@ public class ApiSimulatorConfiguration {
         this.basePath = basePath;
     }
 
-    public String getPrismPath() {
+    public Path getPrismPath() {
         return prismPath;
     }
 
-    public void setPrismPath(String prismPath) {
+    public void setPrismPath(Path prismPath) {
         this.prismPath = prismPath;
+    }
+
+    public Path getSpec() {
+        return spec;
+    }
+
+    public void setSpec(Path spec) {
+        this.spec = spec;
     }
 }

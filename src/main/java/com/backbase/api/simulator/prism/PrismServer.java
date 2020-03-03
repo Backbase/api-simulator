@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.InterruptedIOException;
+import java.nio.file.Path;
 import java.util.Enumeration;
 import java.util.concurrent.Executor;
 import javax.annotation.PostConstruct;
@@ -53,8 +54,9 @@ public class PrismServer {
 
     @PostConstruct
     public void start() throws IOException {
-        process = new ProcessBuilder(configuration.getPrismPath(), "mock",
-            "/home/leandro/dev/repo/cards-api/target/openapi.yaml", "-p",
+        process = new ProcessBuilder(getAbsolutePath(configuration.getPrismPath()),
+            "mock",
+            getAbsolutePath(configuration.getSpec()), "-p",
             Integer.toString(configuration.getPort()))
             .start();
         executor.execute(() -> {
@@ -95,14 +97,18 @@ public class PrismServer {
         });
     }
 
-    private String getPathPrefix() {
-        return "/" + applicationName + configuration.getBasePath();
-    }
-
     @PreDestroy
     public void stop() {
         if (process != null) {
             process.destroy();
         }
+    }
+
+    private String getPathPrefix() {
+        return "/" + applicationName + configuration.getBasePath();
+    }
+
+    private String getAbsolutePath(Path path) {
+        return path.normalize().toAbsolutePath().toString();
     }
 }
