@@ -38,4 +38,5 @@ backbase:
       enabled: false
   api:
     simulator:
+      prismPath: target/prism
       basePath: /client-api/v2

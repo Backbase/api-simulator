@@ -19,6 +19,9 @@ public class ApiSimulatorConfiguration {
     @Pattern(regexp = "/.*")
     private String basePath;
 
+    @NotBlank
+    private String prismPath;
+
     public int getPort() {
         return port;
     }
@@ -33,5 +36,13 @@ public class ApiSimulatorConfiguration {
 
     public void setBasePath(String basePath) {
         this.basePath = basePath;
+    }
+
+    public String getPrismPath() {
+        return prismPath;
+    }
+
+    public void setPrismPath(String prismPath) {
+        this.prismPath = prismPath;
     }
 }

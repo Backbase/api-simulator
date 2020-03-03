@@ -53,7 +53,8 @@ public class PrismServer {
 
     @PostConstruct
     public void start() throws IOException {
-        process = new ProcessBuilder("src/etc/prism", "mock", "/home/leandro/dev/repo/cards-api/target/openapi.yaml", "-p",
+        process = new ProcessBuilder(configuration.getPrismPath(), "mock",
+            "/home/leandro/dev/repo/cards-api/target/openapi.yaml", "-p",
             Integer.toString(configuration.getPort()))
             .start();
         executor.execute(() -> {
