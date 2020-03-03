@@ -17,8 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 public class PrismServer {
@@ -39,17 +37,7 @@ public class PrismServer {
         this.executor = executor;
         this.applicationName = applicationName;
         this.restTemplate = new RestTemplate();
-        this.restTemplate.setErrorHandler(new ResponseErrorHandler() {
-            @Override
-            public boolean hasError(ClientHttpResponse response) {
-                return false;
-            }
-
-            @Override
-            public void handleError(ClientHttpResponse response) {
-                throw new IllegalStateException("Not supposed to be called");
-            }
-        });
+        this.restTemplate.setErrorHandler(new NoErrorResponseErrorHandler());
     }
 
     @PostConstruct
