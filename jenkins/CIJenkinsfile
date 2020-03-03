@@ -1,0 +1,64 @@
+@Library('jenkins-shared-library@latest') l1
+@Library('ctrl-shared-jenkins-library@latest') l2
+
+pipeline {
+    agent {
+        label "maven"
+    }
+
+    environment {
+        PROJECT_KEY = "CTRLSDLC"
+        SLACK_ROOM = "#ctrl-jenkins"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                ciSCMCheckout()
+        	  }
+        }
+
+        stage('Initialize') {
+            steps {
+                script {
+                    pom = readMavenPom(file: 'pom.xml')
+                }
+            }
+        }
+
+        stage('Build & Test & Verify') {
+            steps {
+                mvnBuild("mvn verify")
+            }
+        }
+
+        stage('Static Quality Analysis') {
+            parallel {
+                stage('Sonar Scan') {
+                    steps {
+                        runMavenSonarScan("${PROJECT_KEY}:${pom.artifactId}", "${pom.version}")
+                    }
+                }
+                stage('Black Duck') {
+                    when {
+                        anyOf {
+                            branch 'master'
+                            expression { env.BRANCH_NAME ==~ /^\d+\.\d+\.\d+-hotfix$/ }
+                        }
+                    }
+                    steps {
+                        script {
+                            ciBlackDuckScan()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        failure {
+            slackFailure("${SLACK_ROOM}", pom)
+        }
+    }
+}
