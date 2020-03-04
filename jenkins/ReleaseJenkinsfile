@@ -68,10 +68,10 @@ pipeline {
 
     post {
         success {
-            slackSuccess("${SLACK_ROOM}", pom)
+            slackSuccess(SLACK_ROOM, pom)
         }
         failure {
-            slackFailure("${SLACK_ROOM}", pom)
+            slackFailure(SLACK_ROOM, pom)
         }
     }
 }

@@ -63,7 +63,7 @@ pipeline {
             slackSuccess(SLACK_ROOM, pom)
         }
         failure {
-            slackFailure("${SLACK_ROOM}", pom)
+            slackFailure(SLACK_ROOM, pom)
         }
     }
 }
