@@ -3,12 +3,12 @@
 
 pipeline {
     agent {
-        label "maven"
+        label "kaniko"
     }
 
     environment {
         PROJECT_KEY = "CTRLSDLC"
-        SLACK_ROOM = "#ctrl-jenkins"
+        SLACK_ROOM = "#rnd-retail-ams-jenkins"
     }
 
     stages {
