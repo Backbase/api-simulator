@@ -3,7 +3,9 @@
 
 pipeline {
     agent {
-        label "kaniko"
+        kubernetes {
+            label "kaniko"
+        }
     }
 
     environment {
