@@ -1,6 +1,7 @@
 package com.backbase.api.simulator.config;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -25,7 +26,9 @@ public class ApiSimulatorConfiguration {
     private Path prismPath;
 
     @NotNull
-    private Path spec;
+    private String spec;
+
+    private Optional<String> specAuthorization;
 
     public int getPort() {
         return port;
@@ -51,11 +54,19 @@ public class ApiSimulatorConfiguration {
         this.prismPath = prismPath;
     }
 
-    public Path getSpec() {
+    public String getSpec() {
         return spec;
     }
 
-    public void setSpec(Path spec) {
+    public void setSpec(String spec) {
         this.spec = spec;
+    }
+
+    public Optional<String> getSpecAuthorization() {
+        return specAuthorization;
+    }
+
+    public void setSpecAuthorization(Optional<String> specAuthorization) {
+        this.specAuthorization = specAuthorization;
     }
 }

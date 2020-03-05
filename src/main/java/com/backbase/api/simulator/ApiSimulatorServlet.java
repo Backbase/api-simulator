@@ -1,12 +1,10 @@
 package com.backbase.api.simulator;
 
 import com.backbase.api.simulator.prism.PrismServer;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet
 public class ApiSimulatorServlet extends HttpServlet {
 
     private final PrismServer prismServer;

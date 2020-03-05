@@ -7,15 +7,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.InterruptedIOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.concurrent.Executor;
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,6 +27,7 @@ public class PrismServer {
 
     private final ApiSimulatorConfiguration configuration;
     private final Executor executor;
+    private final String serverPort;
     private final String applicationName;
     private final RestTemplate restTemplate;
 
@@ -32,19 +35,21 @@ public class PrismServer {
 
     public PrismServer(ApiSimulatorConfiguration configuration,
         Executor executor,
+        @Value("${server.port}") String serverPort,
         @Value("${spring.application.name}") String applicationName) {
         this.configuration = configuration;
         this.executor = executor;
+        this.serverPort = serverPort;
         this.applicationName = applicationName;
         this.restTemplate = new RestTemplate();
         this.restTemplate.setErrorHandler(new NoErrorResponseErrorHandler());
     }
 
-    @PostConstruct
+    @EventListener(ApplicationReadyEvent.class)
     public void start() throws IOException {
         process = new ProcessBuilder(getAbsolutePath(configuration.getPrismPath()),
             "mock",
-            getAbsolutePath(configuration.getSpec()), "-p",
+            getSpecPath(), "-p",
             Integer.toString(configuration.getPort()))
             .start();
         executor.execute(() -> {
@@ -94,6 +99,12 @@ public class PrismServer {
 
     private String getPathPrefix() {
         return "/" + applicationName + configuration.getBasePath();
+    }
+
+    private String getSpecPath() {
+        String spec = configuration.getSpec();
+        return spec.startsWith("http") ? "http://localhost:" + serverPort + "/simulator/openapi.yaml"
+            : getAbsolutePath(Paths.get(spec));
     }
 
     private String getAbsolutePath(Path path) {
