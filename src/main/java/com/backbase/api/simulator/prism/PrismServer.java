@@ -68,6 +68,9 @@ public class PrismServer {
 
     public void forward(HttpServletRequest request, HttpServletResponse response) {
         String prismPath = request.getPathInfo().replace(getPathPrefix(), "");
+        if (prismPath.equals(request.getPathInfo())) { // service-to-service call
+            prismPath = request.getPathInfo().replace(configuration.getBasePath(), "");
+        }
         String url = String.format("http://localhost:%s/%s", configuration.getPort(), prismPath);
 
         if (request.getQueryString() != null) {

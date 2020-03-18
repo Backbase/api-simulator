@@ -3,15 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>service-sdk-starter-core</artifactId>
-        <groupId>com.backbase.buildingblocks</groupId>
-        <version>9.3.1</version>
+        <artifactId>ctrl-parent</artifactId>
+        <groupId>com.backbase.dbs.ctrl</groupId>
+        <version>1.5</version>
     </parent>
 
     <groupId>com.backbase.api</groupId>
     <artifactId>api-simulator-service</artifactId>
-    <version>0.3-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <version>0.4-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <scm>
         <developerConnection>scm:git:ssh://git@stash.backbase.com:7999/ctrlsdlc/api-simulator-service.git</developerConnection>
@@ -58,6 +58,7 @@
                     <configuration>
                         <url>https://github.com/stoplightio/prism/releases/download/v${prism.version}</url>
                         <toFile>${project.build.directory}/prism</toFile>
+                        <skipIfExists>true</skipIfExists>
                     </configuration>
                 </plugin>
             </plugins>
