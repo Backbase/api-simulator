@@ -10,12 +10,12 @@
 
     <groupId>com.backbase.api</groupId>
     <artifactId>api-simulator-service</artifactId>
-    <version>0.5</version>
+    <version>0.6-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <scm>
         <developerConnection>scm:git:ssh://git@stash.backbase.com:7999/ctrlsdlc/api-simulator-service.git</developerConnection>
-        <tag>api-simulator-service-0.5</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
