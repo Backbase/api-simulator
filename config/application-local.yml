@@ -25,7 +25,6 @@ eureka:
 logging:
   file: target/logs/application.log
   level:
-    root: INFO
     com.backbase.api.simulator: DEBUG
 
 management:
@@ -38,7 +37,5 @@ backbase:
       enabled: false
   api:
     simulator:
-      prismPath: target/prism
       basePath: /client-api/v2
       spec: https://api.backbase.cloud/doc/cards-api-v2.yaml
-      specAuthorization: YmFja2Jhc2U6YTZjMmhTbVRyOEw1NUdkOQ==

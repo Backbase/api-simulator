@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -34,7 +35,7 @@ public class PrismServer {
     private Process process;
 
     public PrismServer(ApiSimulatorConfiguration configuration,
-        Executor executor,
+        @Qualifier("applicationTaskExecutor") Executor executor,
         @Value("${server.port}") String serverPort,
         @Value("${spring.application.name}") String applicationName) {
         this.configuration = configuration;

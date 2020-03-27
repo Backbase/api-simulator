@@ -143,5 +143,44 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>docker-image</id>
+            <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>wagon-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>download-prism-docker</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>download-single</goal>
+                            </goals>
+                            <configuration>
+                                <fromFile>prism-cli-linux</fromFile>
+                                <toFile>${project.build.directory}/additionalDependencies/bin/prism</toFile>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <configuration>
+                        <extraDirectories>
+                            <permissions>
+                                <permission>
+                                    <file>/bin/prism</file>
+                                    <mode>755</mode>
+                                </permission>
+                            </permissions>
+                        </extraDirectories>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+        </profile>
     </profiles>
 </project>
