@@ -7,7 +7,15 @@ logging:
     root: INFO
 
 backbase:
+  security:
+    public:
+      paths: /**
   api:
     simulator:
       prismPath: /bin/prism
       specAuthorization: YmFja2Jhc2U6YTZjMmhTbVRyOEw1NUdkOQ==
+
+management:
+  health:
+    rabbit:
+      enabled: false
