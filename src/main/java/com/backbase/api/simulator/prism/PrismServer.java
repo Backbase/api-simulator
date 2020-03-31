@@ -2,10 +2,7 @@ package com.backbase.api.simulator.prism;
 
 import com.backbase.api.simulator.config.ApiSimulatorConfiguration;
 import com.google.common.io.ByteStreams;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.InterruptedIOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Enumeration;
@@ -13,8 +10,6 @@ import java.util.concurrent.Executor;
 import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -23,8 +18,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 public class PrismServer {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PrismServer.class);
 
     private final ApiSimulatorConfiguration configuration;
     private final Executor executor;
@@ -49,22 +42,13 @@ public class PrismServer {
     @EventListener(ApplicationReadyEvent.class)
     public void start() throws IOException {
         process = new ProcessBuilder(getAbsolutePath(configuration.getPrismPath()),
-            "mock",
-            getSpecPath(), "-p",
-            Integer.toString(configuration.getPort()))
+            "mock", getSpecPath(),
+            "-p", Integer.toString(configuration.getPort()),
+            "-h", "0.0.0.0")
             .start();
-        executor.execute(() -> {
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    LOGGER.info("Prism: {}", line);
-                }
-            } catch (InterruptedIOException e) {
-                // Nothing to do
-            } catch (IOException e) {
-                LOGGER.error("Couldn't read output from prism server", e);
-            }
-        });
+
+        executor.execute(new PrismLogger("Prism", process.getInputStream()));
+        executor.execute(new PrismLogger("Prism error", process.getErrorStream()));
     }
 
     public void forward(HttpServletRequest request, HttpServletResponse response) {
