@@ -9,12 +9,12 @@
     </parent>
 
     <groupId>com.backbase.api</groupId>
-    <artifactId>api-simulator-service</artifactId>
+    <artifactId>api-simulator</artifactId>
     <version>0.10-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <scm>
-        <developerConnection>scm:git:ssh://git@stash.backbase.com:7999/ctrlsdlc/api-simulator-service.git</developerConnection>
+        <developerConnection>scm:git:ssh://git@stash.backbase.com:7999/ctrlsdlc/api-simulator.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 

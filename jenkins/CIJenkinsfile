@@ -30,7 +30,7 @@ pipeline {
 
         stage('Build & Test & Verify') {
             steps {
-                mvnBuild("mvn verify")
+                mvnBuild("mvn install")
             }
         }
 

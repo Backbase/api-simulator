@@ -1,6 +1,6 @@
 spring:
   application:
-    name: cards-api-simulator-service
+    name: api-simulator-service
 
 server:
   port: 14080
