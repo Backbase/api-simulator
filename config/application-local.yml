@@ -37,5 +37,6 @@ backbase:
       enabled: false
   api:
     simulator:
+      prismPath: target/prism
       basePath: /client-api/v2
       spec: https://api.backbase.cloud/doc/cards-api-v2.yaml
