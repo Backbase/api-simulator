@@ -1,4 +1,4 @@
-# API Simulator Service
+# API Simulator
 
 ## Description
 
@@ -23,20 +23,20 @@ Typically the following properties need to be configured:
 
 - `spring.application.name`: name of the service that you'll simulate, `card-manager` for example
 - `backbase.api.simulator.basePath`: URL path prepended to all API calls, `/client-api/v2` for example
-- `backbase.api.simulator.spec`: OpenAPI specification file path that will be simulated
+- `backbase.api.simulator.spec`: OpenAPI specification file path or URL that will be simulated
 
 ## Execution
 
 ### Locally
 
 Run it as a Spring Boot application with working directory pointing to the root directory of this project.
-Use `com.backbase.api.simulator.Application` as main class.
+Use `com.backbase.api.simulator.Application` as main class and `local` profile.
 
 ### Docker
 
 Execute the following command from the project's root directory to run it with Docker:
 
-`docker run --env-file ./config/env.list --network="host" --rm -it harbor.backbase.eu/<project>/api-simulator-service:<version>`
+`docker run --env-file ./config/env.list --network="host" --rm -it harbor.backbase.eu/<project>/api-simulator:<version>`
 
 Where:
 - `<project>` is a project name on [Harbor](https://harbor.backbase.eu/harbor/projects)

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: api-simulator-service
+    name: api-simulator
 
 server:
   port: 14080
