@@ -10,6 +10,8 @@ import java.util.concurrent.Executor;
 import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -18,6 +20,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 public class PrismServer {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PrismServer.class);
 
     private final ApiSimulatorConfiguration configuration;
     private final Executor executor;
@@ -41,14 +45,16 @@ public class PrismServer {
 
     @EventListener(ApplicationReadyEvent.class)
     public void start() throws IOException {
-        process = new ProcessBuilder(getAbsolutePath(configuration.getPrismPath()),
+        ProcessBuilder processBuilder = new ProcessBuilder(getAbsolutePath(configuration.getPrismPath()),
             "mock", getSpecPath(),
             "-p", Integer.toString(configuration.getPort()),
-            "-h", "0.0.0.0")
-            .start();
+            "-h", "0.0.0.0");
+        LOGGER.info("Executing prism with the following command: {}", processBuilder.command());
 
+        process = processBuilder.start();
         executor.execute(new PrismLogger("Prism", process.getInputStream()));
         executor.execute(new PrismLogger("Prism error", process.getErrorStream()));
+        LOGGER.debug("Prism executed successfully");
     }
 
     public void forward(HttpServletRequest request, HttpServletResponse response) {

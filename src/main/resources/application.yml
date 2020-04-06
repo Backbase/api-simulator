@@ -1,6 +1,8 @@
 spring:
   profiles:
     active: ${DBS_ACTIVE_PROFILE:live}
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 
 logging:
   level:
