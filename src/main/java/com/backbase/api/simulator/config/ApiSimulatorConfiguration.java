@@ -7,8 +7,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @ConfigurationProperties(prefix = "backbase.api.simulator")
@@ -25,10 +27,15 @@ public class ApiSimulatorConfiguration {
     @NotNull
     private Path prismPath;
 
-    @NotNull
+    @NotBlank
     private String spec;
 
     private Optional<String> specAuthorization;
+
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     public int getPort() {
         return port;

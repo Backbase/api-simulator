@@ -9,6 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 public class SpecDownloader {
@@ -20,33 +21,34 @@ public class SpecDownloader {
     private final ApiSimulatorConfiguration configuration;
     private final RestTemplate restTemplate;
 
-    public SpecDownloader(ApiSimulatorConfiguration configuration) {
+    public SpecDownloader(ApiSimulatorConfiguration configuration, RestTemplate restTemplate) {
         this.configuration = configuration;
-        this.restTemplate = new RestTemplate();
+        this.restTemplate = restTemplate;
     }
 
     public Optional<String> download() {
         URI uri = URI.create(configuration.getSpec());
 
-        ResponseEntity<String> response;
+        try {
+            ResponseEntity<String> response = executeDownload(uri);
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return Optional.ofNullable(response.getBody());
+            }
+            LOGGER.error("Couldn't download spec from [{}], server response is [{}]", uri, response);
+        } catch (RestClientException e) {
+            LOGGER.error("Couldn't download spec from [{}]", uri, e);
+        }
+
+        return Optional.empty();
+    }
+
+    private ResponseEntity<String> executeDownload(URI uri) {
+        HttpHeaders headers = new HttpHeaders();
         if (configuration.getSpec().contains(API_BACKBASE_CLOUD)) {
-            HttpHeaders headers = new HttpHeaders();
             String authorization = configuration.getSpecAuthorization().orElseThrow(
                 () -> new IllegalStateException("Authorization configuration must be available to access the API hub"));
             headers.add("Authorization", "Basic " + authorization);
-
-            HttpEntity<Void> entity = new HttpEntity<>(headers);
-
-            response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
-        } else {
-            response = restTemplate.getForEntity(uri, String.class);
         }
-
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return Optional.ofNullable(response.getBody());
-        }
-        LOGGER.error("Couldn't download spec from [{}], server response is [{}]", uri, response);
-
-        return Optional.empty();
+        return restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers), String.class);
     }
 }
