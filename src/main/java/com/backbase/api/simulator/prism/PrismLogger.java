@@ -12,10 +12,15 @@ public class PrismLogger implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PrismLogger.class);
 
+    private static final String SUCCESS_MESSAGE = "Prism is listening on";
+    private static final String ERROR_MESSAGE = "prism mock <document>";
+
+    private final PrismServer prismServer;
     private final String prefix;
     private final InputStream inputStream;
 
-    public PrismLogger(String prefix, InputStream inputStream) {
+    public PrismLogger(PrismServer prismServer, String prefix, InputStream inputStream) {
+        this.prismServer = prismServer;
         this.prefix = prefix;
         this.inputStream = inputStream;
     }
@@ -25,6 +30,12 @@ public class PrismLogger implements Runnable {
             String line;
             while ((line = reader.readLine()) != null) {
                 LOGGER.info("{}: {}", prefix, line);
+
+                if (line.contains(SUCCESS_MESSAGE)) {
+                    prismServer.onPrismStartResult(true);
+                } else if (line.contains(ERROR_MESSAGE)) {
+                    prismServer.onPrismStartResult(false);
+                }
             }
         } catch (InterruptedIOException e) {
             // Nothing to do

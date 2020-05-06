@@ -16,6 +16,7 @@ backbase:
     simulator:
       prismPath: /bin/prism
       specAuthorization: YmFja2Jhc2U6YTZjMmhTbVRyOEw1NUdkOQ==
+      refreshSchedule: "*/30 * * * * *"
 
 management:
   health:
