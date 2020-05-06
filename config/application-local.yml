@@ -37,6 +37,7 @@ backbase:
       enabled: false
   api:
     simulator:
+      refreshSchedule: "-"
       prismPath: target/prism
       basePath: /client-api/v2
       spec: https://api.backbase.cloud/doc/cards-api-v2.yaml

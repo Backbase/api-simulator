@@ -10,7 +10,6 @@ they're meant to be implemented by external parties such as integration APIs.
 
 ## Requirements
 
-- Maven 3.6.x or higher
 - an OpenAPI specification
 
 ## Setup
@@ -36,16 +35,17 @@ Use `com.backbase.api.simulator.Application` as main class and `local` profile.
 
 Execute the following command from the project's root directory to run it with Docker:
 
-`docker run --env-file ./config/env.list -p 14080:14080 --rm -it harbor.backbase.eu/<project>/api-simulator:<version>`
+`docker run --env-file ./config/env.list -p 14080:14080 --rm -it harbor.backbase.eu/staging/api-simulator:<version>`
 
 Where:
-- `<project>` is a project name on [Harbor](https://harbor.backbase.eu/harbor/projects)
-- `<version` is an image version available on [Harbor](https://harbor.backbase.eu/harbor/projects)
+- `<version` is an image version available on [Harbor](https://harbor.backbase.eu/harbor/projects), set it to `latest`
+to run the latest version.
 
 #### Running on Docker with a local OpenAPI spec file
 
-The following command can be used to point the server to an OpenAPI specification file located in the `config` folder:
+The following command can be used to point the latest version of `api-simulator` to an OpenAPI specification file
+located in the `config` folder:
 
-`docker run -v $(pwd)/config/openapi.yaml:/config/openapi.yaml --env-file ./config/env.list -p 14080:14080 --rm -it harbor.backbase.eu/<project>/api-simulator:<version>`
+`docker run -v $(pwd)/config/openapi.yaml:/config/openapi.yaml --env-file ./config/env.list -p 14080:14080 --rm -it harbor.backbase.eu/staging/api-simulator:latest`
 
 Make sure `BACKBASE_API_SIMULATOR_SPEC` is set to `/config/openapi.yaml` in `./config/env.list`.
