@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Downloads API specifications to make them available to the server.
+ */
 public class SpecDownloader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpecDownloader.class);
@@ -21,11 +24,22 @@ public class SpecDownloader {
     private final ApiSimulatorConfiguration configuration;
     private final RestTemplate restTemplate;
 
+    /**
+     * Creates a new instance of the downloader.
+     *
+     * @param configuration API Simulator Service configuration.
+     * @param restTemplate RestTemplate to use to download API specifications.
+     */
     public SpecDownloader(ApiSimulatorConfiguration configuration, RestTemplate restTemplate) {
         this.configuration = configuration;
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Downloads the configured API specification.
+     *
+     * @return API specification content.
+     */
     public Optional<String> download() {
         URI uri = URI.create(configuration.getSpec());
 

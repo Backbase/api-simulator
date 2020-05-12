@@ -8,6 +8,9 @@ import java.io.InterruptedIOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Logs all Prism output and indicates whether it was started successfully or not.
+ */
 public class PrismLogger implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PrismLogger.class);
@@ -19,12 +22,22 @@ public class PrismLogger implements Runnable {
     private final String prefix;
     private final InputStream inputStream;
 
+    /**
+     * Contruct a new instance.
+     *
+     * @param prismServer Prism server to monitor.
+     * @param prefix      Prefix to use in logging messages.
+     * @param inputStream Prism server console output stream.
+     */
     public PrismLogger(PrismServer prismServer, String prefix, InputStream inputStream) {
         this.prismServer = prismServer;
         this.prefix = prefix;
         this.inputStream = inputStream;
     }
 
+    /**
+     * Starts monitoring the Prism server.
+     */
     public void run() {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;

@@ -23,6 +23,9 @@ import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Represents and manages a Prism server execution.
+ */
 public class PrismServer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PrismServer.class);
@@ -40,6 +43,14 @@ public class PrismServer {
     private Process process;
     private boolean processSuccessful;
 
+    /**
+     * Creates a new instance of the server.
+     *
+     * @param configuration API Simulator Service configuration.
+     * @param executor Executor to use for async tasks.
+     * @param serverPort Port the API Simulator is listening on.
+     * @param applicationName Application name the API Simulator is running under.
+     */
     public PrismServer(ApiSimulatorConfiguration configuration,
         @Qualifier("applicationTaskExecutor") Executor executor,
         @Value("${server.port}") String serverPort,
@@ -52,6 +63,11 @@ public class PrismServer {
         this.restTemplate.setErrorHandler(new NoErrorResponseErrorHandler());
     }
 
+    /**
+     * Starts the Prism server.
+     *
+     * @throws IOException If couldn't communicate with the Prism server.
+     */
     @EventListener(ApplicationReadyEvent.class)
     public void start() throws IOException {
         this.processStartLatch.set(new CountDownLatch(1));
@@ -68,11 +84,24 @@ public class PrismServer {
         LOGGER.debug("Prism executed successfully");
     }
 
+    /**
+     * Notifies the Prism server has been started.
+     *
+     * @param success True if the server started successfully.
+     */
     public void onPrismStartResult(boolean success) {
         this.processSuccessful = success;
         this.processStartLatch.get().countDown();
     }
 
+    /**
+     * Forwards an HTTP request to the Prism server and writes the response received.
+     *
+     * @param request Request to forward.
+     * @param response Response to write to.
+     * @throws InterruptedException If the execution is interrupted before it's finished.
+     * @throws PrismUnavailableException If Prism server is not available.
+     */
     public void forward(HttpServletRequest request, HttpServletResponse response)
         throws InterruptedException, PrismUnavailableException {
         if (this.processStartLatch.get().await(PROCESS_TIMEOUT, PROCESS_TIMEOUT_UNIT)) {
@@ -112,6 +141,11 @@ public class PrismServer {
         });
     }
 
+    /**
+     * Stops the Prism server if it's executing.
+     *
+     * @throws InterruptedException If the execution is interrupted while waiting for Prism to stop.
+     */
     @PreDestroy
     public void stop() throws InterruptedException {
         if (process != null) {
@@ -123,6 +157,12 @@ public class PrismServer {
         }
     }
 
+    /**
+     * Stops and starts the Prism server.
+     *
+     * @throws InterruptedException If the execution is interrupted while stopping/starting the Prism server.
+     * @throws IOException If couldn't communicate with the Prism server.
+     */
     public void restart() throws InterruptedException, IOException {
         if (this.processStartLatch.get().await(PROCESS_TIMEOUT, PROCESS_TIMEOUT_UNIT)) {
             stop();

@@ -38,7 +38,7 @@ Execute the following command from the project's root directory to run it with D
 `docker run --env-file ./config/env.list -p 14080:14080 --rm -it harbor.backbase.eu/staging/api-simulator:<version>`
 
 Where:
-- `<version` is an image version available on [Harbor](https://harbor.backbase.eu/harbor/projects), set it to `latest`
+- `<version>` is an image version available on [Harbor](https://harbor.backbase.eu/harbor/projects), set it to `latest`
 to run the latest version.
 
 #### Running on Docker with a local OpenAPI spec file
@@ -49,3 +49,10 @@ located in the `config` folder:
 `docker run -v $(pwd)/config/openapi.yaml:/config/openapi.yaml --env-file ./config/env.list -p 14080:14080 --rm -it harbor.backbase.eu/staging/api-simulator:latest`
 
 Make sure `BACKBASE_API_SIMULATOR_SPEC` is set to `/config/openapi.yaml` in `./config/env.list`.
+
+## Useful links
+
+- [Prism API server](https://github.com/stoplightio/prism)
+- [Browser extension to send custom headers in requests](https://bewisse.com/modheader/)
+- [Helm chart configuration for deployment on k8s environment](https://stash.backbase.com/projects/REF/repos/reference-charts/browse/charts/dbs-transactions/values.yaml#90)
+- [Environment creator configuration for deployment](https://stash.backbase.com/projects/DBS/repos/environment-creator/browse/helmfile.yaml#1158)
