@@ -13,10 +13,20 @@ pipeline {
         SLACK_ROOM = "#rnd-retail-ams-jenkins"
     }
 
+    parameters {
+        string(name: "BRANCH_NAME", defaultValue: "master", description: "Branch from which the release will be created")
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                ciSCMCheckout()
+                checkout([
+                        $class:'GitSCM',
+                        branches: [[name: '${BRANCH_NAME}']],
+                        extensions:scm.extensions + [[$class:'LocalBranch', localBranch:'**'], [$class:'WipeWorkspace'],
+                                                      [$class:'CloneOption', shallow:false, timeout:60]],
+                        userRemoteConfigs:scm.userRemoteConfigs
+                ])
         	  }
         }
 
