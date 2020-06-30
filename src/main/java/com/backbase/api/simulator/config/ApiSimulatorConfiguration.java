@@ -1,5 +1,7 @@
 package com.backbase.api.simulator.config;
 
+import com.backbase.api.simulator.prism.PrismServerMode;
+import java.net.URL;
 import java.nio.file.Path;
 import java.util.Optional;
 import javax.validation.constraints.Min;
@@ -17,20 +19,46 @@ import org.springframework.web.client.RestTemplate;
 @Validated
 public class ApiSimulatorConfiguration {
 
+    /**
+     * Port number prism will be listening on.
+     */
     @Min(1)
     private int port = 4001;
 
+    /**
+     * Base path of URLs that will be served.
+     */
     @NotBlank
     @Pattern(regexp = "/.*")
     private String basePath;
 
+    /**
+     * Path to prism's executable.
+     */
     @NotNull
     private Path prismPath;
 
+    /**
+     * File path or URL of API specification to be used.
+     */
     @NotBlank
     private String spec;
 
-    private Optional<String> specAuthorization;
+    /**
+     * Authorization configuration to obtain API specification if it's a URL.
+     */
+    private Optional<String> specAuthorization = Optional.empty();
+
+    /**
+     * Execution mode of prism.
+     */
+    @NotNull
+    private PrismServerMode mode;
+
+    /**
+     * URL of downstream service if mode is PROXY.
+     */
+    private Optional<URL> downstreamUrl = Optional.empty();
 
     @Bean
     RestTemplate restTemplate() {
@@ -75,5 +103,21 @@ public class ApiSimulatorConfiguration {
 
     public void setSpecAuthorization(Optional<String> specAuthorization) {
         this.specAuthorization = specAuthorization;
+    }
+
+    public PrismServerMode getMode() {
+        return mode;
+    }
+
+    public void setMode(PrismServerMode mode) {
+        this.mode = mode;
+    }
+
+    public Optional<URL> getDownstreamUrl() {
+        return downstreamUrl;
+    }
+
+    public void setDownstreamUrl(Optional<URL> downstreamUrl) {
+        this.downstreamUrl = downstreamUrl;
     }
 }

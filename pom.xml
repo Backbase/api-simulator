@@ -5,7 +5,7 @@
     <parent>
         <artifactId>ctrl-parent</artifactId>
         <groupId>com.backbase.dbs.ctrl</groupId>
-        <version>1.11</version>
+        <version>1.14</version>
     </parent>
 
     <groupId>com.backbase.api</groupId>
@@ -19,8 +19,8 @@
     </scm>
 
     <properties>
-        <ctrl-shared-backend-library.version>2.2</ctrl-shared-backend-library.version>
-        <prism.version>3.3.3</prism.version>
+        <ctrl-shared-backend-library.version>2.4</ctrl-shared-backend-library.version>
+        <prism.version>3.3.5</prism.version>
     </properties>
 
     <dependencies>
@@ -45,6 +45,11 @@
             <groupId>com.backbase.dbs.ctrl</groupId>
             <artifactId>security</artifactId>
             <version>${ctrl-shared-backend-library.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>

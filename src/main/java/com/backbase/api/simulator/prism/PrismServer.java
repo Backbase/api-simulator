@@ -4,8 +4,6 @@ import com.backbase.api.simulator.config.ApiSimulatorConfiguration;
 import com.backbase.api.simulator.exception.PrismUnavailableException;
 import com.google.common.io.ByteStreams;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
@@ -35,11 +33,11 @@ public class PrismServer {
 
     private final ApiSimulatorConfiguration configuration;
     private final Executor executor;
-    private final String serverPort;
+    private final int serverPort;
     private final String applicationName;
     private final RestTemplate restTemplate;
 
-    private AtomicReference<CountDownLatch> processStartLatch = new AtomicReference<>(new CountDownLatch(0));
+    private final AtomicReference<CountDownLatch> processStartLatch = new AtomicReference<>(new CountDownLatch(0));
     private Process process;
     private boolean processSuccessful;
 
@@ -53,7 +51,7 @@ public class PrismServer {
      */
     public PrismServer(ApiSimulatorConfiguration configuration,
         @Qualifier("applicationTaskExecutor") Executor executor,
-        @Value("${server.port}") String serverPort,
+        @Value("${server.port}") int serverPort,
         @Value("${spring.application.name}") String applicationName) {
         this.configuration = configuration;
         this.executor = executor;
@@ -72,16 +70,13 @@ public class PrismServer {
     public void start() throws IOException {
         this.processStartLatch.set(new CountDownLatch(1));
 
-        ProcessBuilder processBuilder = new ProcessBuilder(getAbsolutePath(configuration.getPrismPath()),
-            "mock", getSpecPath(),
-            "-p", Integer.toString(configuration.getPort()),
-            "-h", "0.0.0.0");
+        ProcessBuilder processBuilder = configuration.getMode().buildProcess(configuration, serverPort);
         LOGGER.info("Executing prism with the following command: {}", processBuilder.command());
 
         process = processBuilder.start();
         executor.execute(new PrismLogger(this, "Prism", process.getInputStream()));
         executor.execute(new PrismLogger(this, "Prism error", process.getErrorStream()));
-        LOGGER.debug("Prism executed successfully");
+        LOGGER.debug("Prism command executed");
     }
 
     /**
@@ -172,15 +167,5 @@ public class PrismServer {
 
     private String getPathPrefix() {
         return "/" + applicationName + configuration.getBasePath();
-    }
-
-    private String getSpecPath() {
-        String spec = configuration.getSpec();
-        return spec.startsWith("http") ? "http://localhost:" + serverPort + "/simulator/openapi.yaml"
-            : getAbsolutePath(Paths.get(spec));
-    }
-
-    private String getAbsolutePath(Path path) {
-        return path.normalize().toAbsolutePath().toString();
     }
 }

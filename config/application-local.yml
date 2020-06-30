@@ -40,4 +40,4 @@ backbase:
       refreshSchedule: "-"
       prismPath: target/prism
       basePath: /client-api/v2
-      spec: https://api.backbase.cloud/doc/cards-api-v2.yaml
+      spec: https://api.backbase.cloud/doc/transaction-management-client-api-v2.yaml

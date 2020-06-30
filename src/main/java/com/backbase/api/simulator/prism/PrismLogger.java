@@ -16,14 +16,14 @@ public class PrismLogger implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(PrismLogger.class);
 
     private static final String SUCCESS_MESSAGE = "Prism is listening on";
-    private static final String ERROR_MESSAGE = "prism mock <document>";
+    private static final String ERROR_MESSAGE = "Error:";
 
     private final PrismServer prismServer;
     private final String prefix;
     private final InputStream inputStream;
 
     /**
-     * Contruct a new instance.
+     * Construct a new instance.
      *
      * @param prismServer Prism server to monitor.
      * @param prefix      Prefix to use in logging messages.
