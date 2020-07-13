@@ -1,6 +1,7 @@
 package com.backbase.api.simulator;
 
 import com.backbase.api.simulator.config.ApiSimulatorConfiguration;
+import com.backbase.api.simulator.prism.PrismHealthIndicator;
 import com.backbase.api.simulator.prism.PrismReloader;
 import com.backbase.api.simulator.prism.PrismServer;
 import com.backbase.api.simulator.spec.SpecDownloader;
@@ -18,6 +19,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Import({
     ApiSimulatorConfiguration.class,
     LocalSecurityConfig.class,
+    PrismHealthIndicator.class,
     PrismReloader.class,
     PrismServer.class,
     ServletConfiguration.class,

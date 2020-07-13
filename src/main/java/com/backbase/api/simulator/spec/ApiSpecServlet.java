@@ -21,6 +21,7 @@ public class ApiSpecServlet extends HttpServlet {
     }
 
     @Override
+    @SuppressWarnings("squid:S1989") // We're only throwing IOException
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             Optional<String> spec = specDownloader.download();

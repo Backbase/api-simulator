@@ -2,9 +2,7 @@ package com.backbase.api.simulator.prism;
 
 import com.backbase.api.simulator.config.ApiSimulatorConfiguration;
 import com.backbase.api.simulator.exception.PrismUnavailableException;
-import com.google.common.io.ByteStreams;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -120,20 +118,8 @@ public class PrismServer {
             url += "?" + request.getQueryString();
         }
 
-        restTemplate.execute(url, HttpMethod.valueOf(request.getMethod()), clientRequest -> {
-            Enumeration<String> headerNames = request.getHeaderNames();
-            while (headerNames.hasMoreElements()) {
-                String headerName = headerNames.nextElement();
-                clientRequest.getHeaders().add(headerName, request.getHeader(headerName));
-            }
-            ByteStreams.copy(request.getInputStream(), clientRequest.getBody());
-        }, clientResponse -> {
-            response.setStatus(clientResponse.getRawStatusCode());
-            clientResponse.getHeaders()
-                .forEach((key, value1) -> value1.forEach(value -> response.addHeader(key, value)));
-            ByteStreams.copy(clientResponse.getBody(), response.getOutputStream());
-            return null;
-        });
+        restTemplate.execute(url, HttpMethod.valueOf(request.getMethod()), new PrismRequestCallback(request),
+            new PrismResponseExtractor(response));
     }
 
     /**
@@ -167,5 +153,9 @@ public class PrismServer {
 
     private String getPathPrefix() {
         return "/" + applicationName + configuration.getBasePath();
+    }
+
+    public boolean isRunning() {
+        return processSuccessful;
     }
 }
