@@ -27,10 +27,6 @@ logging:
   level:
     com.backbase.api.simulator: DEBUG
 
-management:
-  server:
-    port: 24080
-
 backbase:
   security:
     http:
