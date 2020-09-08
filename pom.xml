@@ -33,6 +33,10 @@
             <artifactId>auth-security</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>communication</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>28.2-jre</version>
