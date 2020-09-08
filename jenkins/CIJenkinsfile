@@ -56,6 +56,19 @@ pipeline {
                 }
             }
         }
+
+        stage('Publish Docker Image') {
+            when {
+                branch 'master'
+            }
+            steps {
+                withCredentials([
+                    usernamePassword(credentialsId: 'harbor-credentials', usernameVariable: 'harboruser', passwordVariable: 'harborpassword')
+                ]) {
+                    mvnBuild("mvn install -Dskip.unit.tests=true -Dskip.integration.tests=true -Pdocker-image")
+                }
+            }
+        }
     }
 
     post {
