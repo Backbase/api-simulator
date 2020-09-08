@@ -5,7 +5,7 @@
     <parent>
         <artifactId>ctrl-parent</artifactId>
         <groupId>com.backbase.dbs.ctrl</groupId>
-        <version>1.16</version>
+        <version>1.17</version>
     </parent>
 
     <groupId>com.backbase.api</groupId>
