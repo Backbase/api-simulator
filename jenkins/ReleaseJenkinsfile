@@ -63,11 +63,7 @@ pipeline {
 
         stage('Release') {
             steps {
-                withCredentials([
-                    usernamePassword(credentialsId: 'harbor-credentials', usernameVariable: 'harboruser', passwordVariable: 'harborpassword')
-                ]) {
-                    mvnBuild("mvn --batch-mode release:prepare release:perform")
-                }
+                mvnBuild("mvn --batch-mode release:prepare release:perform")
             }
     	  }
 

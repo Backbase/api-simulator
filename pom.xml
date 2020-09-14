@@ -5,7 +5,7 @@
     <parent>
         <artifactId>ctrl-parent</artifactId>
         <groupId>com.backbase.dbs.ctrl</groupId>
-        <version>1.17</version>
+        <version>1.18</version>
     </parent>
 
     <groupId>com.backbase.api</groupId>
@@ -19,7 +19,7 @@
     </scm>
 
     <properties>
-        <ctrl-shared-backend-library.version>2.4</ctrl-shared-backend-library.version>
+        <ctrl-shared-backend-library.version>2.6</ctrl-shared-backend-library.version>
         <prism.version>3.3.6</prism.version>
     </properties>
 
@@ -39,11 +39,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>28.2-jre</version>
-        </dependency>
-        <dependency>
-            <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>presentation-starter-config</artifactId>
+            <version>29.0-jre</version>
         </dependency>
         <dependency>
             <groupId>com.backbase.dbs.ctrl</groupId>

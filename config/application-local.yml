@@ -3,6 +3,8 @@ spring:
     name: api-simulator
 
 server:
+  error:
+    include-message: always
   port: 14080
   tomcat:
     basedir: target
