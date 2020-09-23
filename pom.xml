@@ -5,7 +5,7 @@
     <parent>
         <artifactId>ctrl-parent</artifactId>
         <groupId>com.backbase.dbs.ctrl</groupId>
-        <version>1.18</version>
+        <version>1.19</version>
     </parent>
 
     <groupId>com.backbase.api</groupId>
@@ -19,7 +19,7 @@
     </scm>
 
     <properties>
-        <ctrl-shared-backend-library.version>2.6</ctrl-shared-backend-library.version>
+        <ctrl-shared-backend-library.version>2.7</ctrl-shared-backend-library.version>
         <prism.version>3.3.6</prism.version>
     </properties>
 
