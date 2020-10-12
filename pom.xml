@@ -20,7 +20,7 @@
 
     <properties>
         <ctrl-shared-backend-library.version>2.7</ctrl-shared-backend-library.version>
-        <prism.version>3.3.6</prism.version>
+        <prism.version>4.1.0</prism.version>
     </properties>
 
     <dependencies>

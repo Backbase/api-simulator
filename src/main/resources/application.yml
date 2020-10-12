@@ -16,10 +16,14 @@ backbase:
     simulator:
       refreshSchedule: "*/30 * * * * *"
       prismPath: /bin/prism
-      specAuthorization: YmFja2Jhc2U6YTZjMmhTbVRyOEw1NUdkOQ==
+      specAuthorization: AKCp8hyZWLiibdRX3nGAp6LJS9Jf8QWJSbURMEzc1pjgnicLDFZcpbreHVcCg1xxS8Ea4Y82c
       mode: SIMULATION
 
 management:
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
   health:
     rabbit:
       enabled: false

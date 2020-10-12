@@ -13,6 +13,8 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 import com.backbase.api.simulator.config.ApiSimulatorConfiguration;
 import java.net.URI;
 import java.util.Optional;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpMethod;
@@ -25,6 +27,7 @@ import org.springframework.web.client.RestTemplate;
 public class SpecDownloaderTest {
 
     private static final String API_SPEC_CONTENT = "api-spec-content";
+    private static final Executor EXECUTOR = Executors.newSingleThreadExecutor();
 
     private RestTemplate restTemplate;
     private MockRestServiceServer mockServer;
@@ -37,7 +40,7 @@ public class SpecDownloaderTest {
 
     @Test(expected = IllegalStateException.class)
     public void testDownloadFromBackbaseCloudWithoutAuthorization() {
-        SpecDownloader downloader = new SpecDownloader(withoutSpecAuthorization(), restTemplate);
+        SpecDownloader downloader = new SpecDownloader(withoutSpecAuthorization(), restTemplate, EXECUTOR);
         downloader.download();
     }
 
@@ -55,7 +58,7 @@ public class SpecDownloaderTest {
                 .body(API_SPEC_CONTENT)
             );
 
-        SpecDownloader downloader = new SpecDownloader(config, restTemplate);
+        SpecDownloader downloader = new SpecDownloader(config, restTemplate, EXECUTOR);
         Optional<String> spec = downloader.download();
         assertEquals(Optional.of(API_SPEC_CONTENT), spec);
     }
@@ -73,7 +76,7 @@ public class SpecDownloaderTest {
                 .body(API_SPEC_CONTENT)
             );
 
-        SpecDownloader downloader = new SpecDownloader(config, restTemplate);
+        SpecDownloader downloader = new SpecDownloader(config, restTemplate, EXECUTOR);
         Optional<String> spec = downloader.download();
         assertEquals(Optional.of(API_SPEC_CONTENT), spec);
     }
@@ -87,7 +90,7 @@ public class SpecDownloaderTest {
             .andExpect(method(HttpMethod.GET))
             .andRespond(withStatus(HttpStatus.NOT_FOUND));
 
-        SpecDownloader downloader = new SpecDownloader(config, restTemplate);
+        SpecDownloader downloader = new SpecDownloader(config, restTemplate, EXECUTOR);
         Optional<String> spec = downloader.download();
         assertEquals(Optional.empty(), spec);
     }
