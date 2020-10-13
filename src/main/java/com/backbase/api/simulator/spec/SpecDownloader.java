@@ -3,11 +3,8 @@ package com.backbase.api.simulator.spec;
 import com.backbase.api.simulator.config.ApiSimulatorConfiguration;
 import java.net.URI;
 import java.util.Optional;
-import java.util.concurrent.Executor;
-import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -27,29 +24,16 @@ public class SpecDownloader {
 
     private final ApiSimulatorConfiguration configuration;
     private final RestTemplate restTemplate;
-    private final Executor executor;
-
-    private Optional<String> cachedSpec = Optional.empty();
 
     /**
      * Creates a new instance of the downloader.
      *
      * @param configuration API Simulator Service configuration.
      * @param restTemplate RestTemplate to use to download API specifications.
-     * @param executor Executor to use to preload API spec.
      */
-    public SpecDownloader(ApiSimulatorConfiguration configuration,
-        RestTemplate restTemplate,
-        @Qualifier("applicationTaskExecutor") Executor executor) {
+    public SpecDownloader(ApiSimulatorConfiguration configuration, RestTemplate restTemplate) {
         this.configuration = configuration;
         this.restTemplate = restTemplate;
-        this.executor = executor;
-    }
-
-    @PostConstruct
-    public void preload() {
-        LOGGER.info("Preloading API specification [{}] on best effort", configuration.getSpec());
-        executor.execute(this::download);
     }
 
     /**
@@ -58,10 +42,6 @@ public class SpecDownloader {
      * @return API specification content.
      */
     public Optional<String> download() {
-        if (cachedSpec.isPresent()) {
-            return cachedSpec;
-        }
-
         URI uri = URI.create(configuration.getSpec());
         Optional<String> spec = Optional.empty();
         try {
@@ -74,7 +54,6 @@ public class SpecDownloader {
         } catch (RestClientException e) {
             LOGGER.error("Couldn't download spec from [{}]", uri, e);
         }
-        cachedSpec = spec;
 
         return spec;
     }
