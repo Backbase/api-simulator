@@ -37,5 +37,4 @@ backbase:
     simulator:
       refreshSchedule: "-"
       prismPath: target/prism
-      basePath: /client-api/v2
       spec: https://artifacts.backbase.com/specs/transaction-manager/transaction-manager-client-api-v2.0.0.yaml
