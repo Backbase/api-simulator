@@ -48,7 +48,7 @@ pipeline {
             parallel {
                 stage('Sonar Scan') {
                     steps {
-                        runMavenSonarScan("${PROJECT_KEY}:${pom.artifactId}", "${pom.version}")
+                        runMavenSonarScan_v2("${PROJECT_KEY}:${pom.artifactId}")
                     }
                 }
                 stage('Black Duck') {
