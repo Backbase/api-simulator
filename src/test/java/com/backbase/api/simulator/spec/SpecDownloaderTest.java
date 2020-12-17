@@ -36,33 +36,15 @@ public class SpecDownloaderTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void testDownloadFromBackbaseCloudWithoutAuthorization() {
+    public void testDownloadFromArtifactoryWithoutAuthorization() {
         SpecDownloader downloader = new SpecDownloader(withoutSpecAuthorization(), restTemplate);
         downloader.download();
     }
 
     @Test
-    public void testDownloadFromBackbaseCloudWithAuthorization() {
-        ApiSimulatorConfiguration config = defaultConfig();
-
-        mockServer.expect(ExpectedCount.once(),
-            requestTo(URI.create(config.getSpec())))
-            .andExpect(method(HttpMethod.GET))
-            .andExpect(header("Authorization", "Basic " + config.getSpecAuthorization()
-                .orElseThrow(() -> new IllegalStateException("Required spec authorization missing"))))
-            .andRespond(withStatus(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(API_SPEC_CONTENT)
-            );
-
-        SpecDownloader downloader = new SpecDownloader(config, restTemplate);
-        Optional<String> spec = downloader.download();
-        assertEquals(Optional.of(API_SPEC_CONTENT), spec);
-    }
-
-    @Test
     public void testDownloadFromArtifactoryWithAuthorization() {
-        ApiSimulatorConfiguration config = withSpec("https://artifacts.backbase.com/specs/place-manager/place-manager-client-api-v2.0.0.yaml");
+        ApiSimulatorConfiguration config =
+            withSpec("https://artifacts.backbase.com/specs/place-manager/place-manager-client-api-v2.0.0.yaml");
 
         mockServer.expect(ExpectedCount.once(),
             requestTo(URI.create(config.getSpec())))
@@ -71,8 +53,7 @@ public class SpecDownloaderTest {
                 .orElseThrow(() -> new IllegalStateException("Required spec authorization missing"))))
             .andRespond(withStatus(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(API_SPEC_CONTENT)
-            );
+                .body(API_SPEC_CONTENT));
 
         SpecDownloader downloader = new SpecDownloader(config, restTemplate);
         Optional<String> spec = downloader.download();
@@ -89,8 +70,7 @@ public class SpecDownloaderTest {
             .andExpect(headerDoesNotExist("Authorization"))
             .andRespond(withStatus(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(API_SPEC_CONTENT)
-            );
+                .body(API_SPEC_CONTENT));
 
         SpecDownloader downloader = new SpecDownloader(config, restTemplate);
         Optional<String> spec = downloader.download();

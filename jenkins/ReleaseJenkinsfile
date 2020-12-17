@@ -4,7 +4,7 @@
 pipeline {
     agent {
         kubernetes {
-            label "kaniko"
+            label "jenkins-maven-slave-jdk11"
         }
     }
 

@@ -19,7 +19,6 @@ public class SpecDownloader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpecDownloader.class);
 
-    private static final String API_BACKBASE_CLOUD = "api.backbase.cloud";
     private static final String ARTIFACTS_BACKBASE_COM = "artifacts.backbase.com";
 
     private final ApiSimulatorConfiguration configuration;
@@ -60,10 +59,7 @@ public class SpecDownloader {
 
     private ResponseEntity<String> executeDownload(URI uri) {
         HttpHeaders headers = new HttpHeaders();
-        if (configuration.getSpec().contains(API_BACKBASE_CLOUD)) {
-            String authorization = getRequiredAuthorization();
-            headers.add("Authorization", "Basic " + authorization);
-        } else if (configuration.getSpec().contains(ARTIFACTS_BACKBASE_COM)) {
+        if (configuration.getSpec().contains(ARTIFACTS_BACKBASE_COM)) {
             String authorization = getRequiredAuthorization();
             headers.add("X-JFrog-Art-Api", authorization);
         }
