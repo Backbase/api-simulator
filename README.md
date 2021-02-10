@@ -24,6 +24,13 @@ Typically the following properties need to be configured:
 - `backbase.api.simulator.basePath`: URL path prepended to all API calls, `/client-api/v2` for example
 - `backbase.api.simulator.spec`: OpenAPI specification file path or URL that will be simulated
 
+## Known issues
+
+https://github.com/stoplightio/prism/issues/1578:
+
+Prism uses a non-configurable timeout of 5 seconds to download the OpenAPI specification and fails with the message
+`socket hang up` if the download takes longer than that, a workaround is to use a local file instead.
+
 ## Execution
 
 ### Locally
