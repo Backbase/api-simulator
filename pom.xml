@@ -5,7 +5,7 @@
     <parent>
         <artifactId>ctrl-parent</artifactId>
         <groupId>com.backbase.dbs.ctrl</groupId>
-        <version>1.30</version>
+        <version>1.37</version>
     </parent>
 
     <groupId>com.backbase.api</groupId>
@@ -81,6 +81,14 @@
                         <url>https://github.com/stoplightio/prism/releases/download/v${prism.version}</url>
                         <toFile>${project.build.directory}/prism</toFile>
                         <skipIfExists>true</skipIfExists>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <configuration>
+                        <releaseProfiles>docker-image,!spotless-check</releaseProfiles>
                     </configuration>
                 </plugin>
             </plugins>
