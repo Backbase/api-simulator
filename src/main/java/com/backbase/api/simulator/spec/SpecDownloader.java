@@ -20,6 +20,7 @@ public class SpecDownloader {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpecDownloader.class);
 
     private static final String ARTIFACTS_BACKBASE_COM = "artifacts.backbase.com";
+    private static final String REPO_BACKBASE_COM = "repo.backbase.com";
 
     private final ApiSimulatorConfiguration configuration;
     private final RestTemplate restTemplate;
@@ -59,7 +60,8 @@ public class SpecDownloader {
 
     private ResponseEntity<String> executeDownload(URI uri) {
         HttpHeaders headers = new HttpHeaders();
-        if (configuration.getSpec().contains(ARTIFACTS_BACKBASE_COM)) {
+        if (configuration.getSpec().contains(ARTIFACTS_BACKBASE_COM) ||
+            configuration.getSpec().contains(REPO_BACKBASE_COM)) {
             String authorization = getRequiredAuthorization();
             headers.add("X-JFrog-Art-Api", authorization);
         }
