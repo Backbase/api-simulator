@@ -1,6 +1,7 @@
 package com.backbase.api.simulator.config;
 
 import com.backbase.api.simulator.prism.PrismServerMode;
+import com.google.common.collect.ImmutableMap;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -16,7 +17,7 @@ public class ApiSimulatorConfigurations {
         config.setBasePath("/");
         config.setSpec(
             "https://artifacts.backbase.com/specs/transaction-manager/transaction-manager-client-api-v2.0.0.yaml");
-        config.setSpecAuthorization(Optional.of("authorization"));
+        config.setSpecAuthorizations(ImmutableMap.of("artifacts.backbase.com", "authorization"));
         return config;
     }
 
@@ -29,7 +30,7 @@ public class ApiSimulatorConfigurations {
 
     public static ApiSimulatorConfiguration withoutSpecAuthorization() {
         ApiSimulatorConfiguration config = defaultConfig();
-        config.setSpecAuthorization(Optional.empty());
+        config.setSpecAuthorizations(ImmutableMap.of());
         return config;
     }
 
