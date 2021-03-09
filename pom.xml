@@ -226,4 +226,17 @@
             </build>
         </profile>
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>backbase</id>
+            <url>https://repo.backbase.com/repo</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>backbase</id>
+            <url>https://repo.backbase.com/repo</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>
