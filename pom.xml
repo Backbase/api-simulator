@@ -98,8 +98,10 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <configuration>
-                    <ratchetFrom>main</ratchetFrom>
+                <configuration combine.self="override">
+                    <!-- Code formatting rules are only available internally, so it needs to be skipped for now -->
+                    <skip>true</skip>
+                    <ratchetFrom />
                 </configuration>
             </plugin>
 
