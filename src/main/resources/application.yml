@@ -17,7 +17,9 @@ backbase:
       refreshSchedule: "*/30 * * * * *"
       prismPath: /bin/prism
       basePath: /
-      specAuthorization: AKCp8hyZWLiibdRX3nGAp6LJS9Jf8QWJSbURMEzc1pjgnicLDFZcpbreHVcCg1xxS8Ea4Y82c
+      specAuthorizations:
+        artifacts.backbase.com: AKCp8hyZWLiibdRX3nGAp6LJS9Jf8QWJSbURMEzc1pjgnicLDFZcpbreHVcCg1xxS8Ea4Y82c
+        repo.backbase.com: AKCp8ihVbNG3EeHEXxEkpU8Tbg7NJ16DJqRWVmEQLh4Bkn9CSD17yJiVP3rt6u9WVgrrA6Fbu
       mode: SIMULATION
 
 management:

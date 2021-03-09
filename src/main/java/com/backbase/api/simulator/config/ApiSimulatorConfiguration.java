@@ -1,8 +1,10 @@
 package com.backbase.api.simulator.config;
 
 import com.backbase.api.simulator.prism.PrismServerMode;
+import com.google.common.collect.ImmutableMap;
 import java.net.URL;
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.Optional;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -47,7 +49,7 @@ public class ApiSimulatorConfiguration {
     /**
      * Authorization configuration to obtain API specification if it's a URL.
      */
-    private Optional<String> specAuthorization = Optional.empty();
+    private Map<String, String> specAuthorizations = ImmutableMap.of();
 
     /**
      * Execution mode of prism.
@@ -97,12 +99,12 @@ public class ApiSimulatorConfiguration {
         this.spec = spec;
     }
 
-    public Optional<String> getSpecAuthorization() {
-        return specAuthorization;
+    public Map<String, String> getSpecAuthorizations() {
+        return specAuthorizations;
     }
 
-    public void setSpecAuthorization(Optional<String> specAuthorization) {
-        this.specAuthorization = specAuthorization;
+    public void setSpecAuthorizations(Map<String, String> specAuthorizations) {
+        this.specAuthorizations = specAuthorizations;
     }
 
     public PrismServerMode getMode() {

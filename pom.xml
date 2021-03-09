@@ -96,6 +96,16 @@
 
         <plugins>
             <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <configuration combine.self="override">
+                    <!-- Code formatting rules are only available internally, so it needs to be skipped for now -->
+                    <skip>true</skip>
+                    <ratchetFrom />
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
@@ -218,4 +228,17 @@
             </build>
         </profile>
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>backbase</id>
+            <url>https://repo.backbase.com/repo</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>backbase</id>
+            <url>https://repo.backbase.com/repo</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

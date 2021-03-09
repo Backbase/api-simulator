@@ -2,6 +2,7 @@ package com.backbase.api.simulator.spec;
 
 import com.backbase.api.simulator.config.ApiSimulatorConfiguration;
 import java.net.URI;
+import java.util.Map.Entry;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +19,6 @@ import org.springframework.web.client.RestTemplate;
 public class SpecDownloader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpecDownloader.class);
-
-    private static final String ARTIFACTS_BACKBASE_COM = "artifacts.backbase.com";
 
     private final ApiSimulatorConfiguration configuration;
     private final RestTemplate restTemplate;
@@ -59,15 +58,15 @@ public class SpecDownloader {
 
     private ResponseEntity<String> executeDownload(URI uri) {
         HttpHeaders headers = new HttpHeaders();
-        if (configuration.getSpec().contains(ARTIFACTS_BACKBASE_COM)) {
-            String authorization = getRequiredAuthorization();
-            headers.add("X-JFrog-Art-Api", authorization);
-        }
+        Optional<String> specAuthorization = getSpecAuthorization();
+        specAuthorization.ifPresent(s -> headers.add("X-JFrog-Art-Api", s));
         return restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers), String.class);
     }
 
-    private String getRequiredAuthorization() {
-        return configuration.getSpecAuthorization().orElseThrow(
-            () -> new IllegalStateException("Authorization configuration must be available to download the API spec"));
+    private Optional<String> getSpecAuthorization() {
+        return configuration.getSpecAuthorizations().entrySet().stream()
+            .filter(entry -> configuration.getSpec().contains(entry.getKey()))
+            .map(Entry::getValue)
+            .findFirst();
     }
 }

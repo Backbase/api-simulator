@@ -2,7 +2,6 @@ package com.backbase.api.simulator.spec;
 
 import static com.backbase.api.simulator.config.ApiSimulatorConfigurations.defaultConfig;
 import static com.backbase.api.simulator.config.ApiSimulatorConfigurations.withSpec;
-import static com.backbase.api.simulator.config.ApiSimulatorConfigurations.withoutSpecAuthorization;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.headerDoesNotExist;
@@ -35,12 +34,6 @@ public class SpecDownloaderTest {
         mockServer = MockRestServiceServer.createServer(restTemplate);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testDownloadFromArtifactoryWithoutAuthorization() {
-        SpecDownloader downloader = new SpecDownloader(withoutSpecAuthorization(), restTemplate);
-        downloader.download();
-    }
-
     @Test
     public void testDownloadFromArtifactoryWithAuthorization() {
         ApiSimulatorConfiguration config =
@@ -49,8 +42,7 @@ public class SpecDownloaderTest {
         mockServer.expect(ExpectedCount.once(),
             requestTo(URI.create(config.getSpec())))
             .andExpect(method(HttpMethod.GET))
-            .andExpect(header("X-JFrog-Art-Api", config.getSpecAuthorization()
-                .orElseThrow(() -> new IllegalStateException("Required spec authorization missing"))))
+            .andExpect(header("X-JFrog-Art-Api", config.getSpecAuthorizations().get("artifacts.backbase.com")))
             .andRespond(withStatus(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(API_SPEC_CONTENT));

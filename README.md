@@ -33,29 +33,26 @@ Prism uses a non-configurable timeout of 5 seconds to download the OpenAPI speci
 
 ## Execution
 
+### Preparation
+
+Download an OpenAPI specification and copy it to `config/openapi.yaml`.
+It's also possible to configure a URL so that the service can download it at startup.
+
 ### Locally
 
 Run it as a Spring Boot application with working directory pointing to the root directory of this project.
-Use `com.backbase.api.simulator.Application` as main class and `local` profile.
+Use `com.backbase.api.simulator.Application` as main class, `local` profile and configure it with
+`config/application-local.yml` file.
 
 ### Docker
 
-Execute the following command from the project's root directory to run it with Docker:
+Execute the following command to generate a docker image:
 
-`docker run --env-file ./config/env.list -p 14080:14080 --rm -it harbor.backbase.eu/staging/api-simulator:<version>`
+`mvn clean install jib:dockerBuild -Pdocker-image`
 
-Where:
-- `<version>` is an image version available on [Harbor](https://harbor.backbase.eu/harbor/projects), set it to `latest`
-to run the latest version.
+Then you can run the service with:
 
-#### Running on Docker with a local OpenAPI spec file
-
-The following command can be used to point the latest version of `api-simulator` to an OpenAPI specification file
-located in the `config` folder:
-
-`docker run -v $(pwd)/config/openapi.yaml:/config/openapi.yaml --env-file ./config/env.list -p 14080:14080 --rm -it harbor.backbase.eu/staging/api-simulator:latest`
-
-Make sure `BACKBASE_API_SIMULATOR_SPEC` is set to `/config/openapi.yaml` in `./config/env.list`.
+`docker run -v $(pwd)/config/openapi.yaml:/config/openapi.yaml --env-file ./config/env.list -p 8080:8080 --rm -it your-image-name`
 
 ## Useful links
 
