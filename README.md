@@ -21,7 +21,6 @@ Build it as a regular maven project with `mvn clean install`.
 Typically, the following properties need to be configured:
 
 - `spring.application.name`: name of the service that you'll simulate, `card-manager` for example
-- `backbase.api.simulator.basePath`: URL path prepended to all API calls, `/client-api/v2` for example
 - `backbase.api.simulator.spec`: OpenAPI specification file path or URL that will be simulated
 
 ## Known issues
