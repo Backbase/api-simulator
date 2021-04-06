@@ -14,7 +14,7 @@
     <packaging>war</packaging>
 
     <scm>
-        <developerConnection>scm:git:ssh://git@stash.backbase.com:7999/ctrlsdlc/api-simulator.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/Backbase/api-simulator.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 

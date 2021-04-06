@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'pom.xml'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache local Maven repository
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-m2
+        restore-keys: |
+          ${{ runner.os }}-m2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - name: Set up Git user
+      run: |
+        git config user.email "actions@github.com"
+        git config user.name "GitHub Actions"
+    - name: Set up Maven
+      uses: s4u/maven-settings-action@v2.4.0
+      with:
+        servers: |
+          [{
+            "id": "backbase",
+            "username": "${env.MAVEN_USERNAME}",
+            "password": "${env.MAVEN_PASSWORD}"
+          }, {
+            "id": "ghcr.io",
+            "username": "${env.GITHUB_USERNAME}",
+            "password": "${env.GITHUB_PASSWORD}"
+          }]
+    - name: Release Image
+      run: mvn release:prepare release:perform -Ddocker.repo.url=ghcr.io -Ddocker.repo.project=backbase
+      env:
+        MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+        GITHUB_USERNAME: ${{ github.repository }}
+        GITHUB_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
