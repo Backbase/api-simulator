@@ -39,7 +39,7 @@ jobs:
             "password": "${env.GITHUB_PASSWORD}"
           }]
     - name: Release Image
-      run: mvn release:prepare release:perform -Ddocker.repo.url=ghcr.io -Ddocker.repo.project=backbase
+      run: mvn release:prepare release:perform
       env:
         MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}

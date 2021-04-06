@@ -89,6 +89,7 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <configuration>
                         <arguments>-Dskip.unit.tests=true -Dskip.integration.tests=true -Ddocker.repo.url=ghcr.io -Ddocker.repo.project=backbase</arguments>
+                        <goals>install</goals>
                         <releaseProfiles>docker-image,!spotless-check</releaseProfiles>
                     </configuration>
                 </plugin>
