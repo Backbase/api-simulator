@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -56,6 +57,7 @@ public class PrismServer {
         this.serverPort = serverPort;
         this.applicationName = applicationName;
         this.restTemplate = new RestTemplate();
+        this.restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
         this.restTemplate.setErrorHandler(new NoErrorResponseErrorHandler());
     }
 
