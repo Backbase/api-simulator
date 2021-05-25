@@ -19,7 +19,7 @@ backbase:
       basePath: /
       specAuthorizations:
         artifacts.backbase.com: AKCp8hyZWLiibdRX3nGAp6LJS9Jf8QWJSbURMEzc1pjgnicLDFZcpbreHVcCg1xxS8Ea4Y82c
-        repo.backbase.com: AKCp8ihVbNG3EeHEXxEkpU8Tbg7NJ16DJqRWVmEQLh4Bkn9CSD17yJiVP3rt6u9WVgrrA6Fbu
+        repo.backbase.com: AKCp8jQJJwsjdYoPdndtju6U61od4tCUTAxQAXGyHAfdG3qetgGLa8z8uiag87sRUnzredAe8
       mode: SIMULATION
 
 management:
