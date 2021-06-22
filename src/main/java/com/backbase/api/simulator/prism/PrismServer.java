@@ -64,6 +64,7 @@ public class PrismServer {
      * Starts the Prism server.
      *
      * @throws IOException If couldn't communicate with the Prism server.
+     * @throws InterruptedException If the thread is interrupted during the process.
      */
     @EventListener(ApplicationReadyEvent.class)
     public void start() throws IOException, InterruptedException {
