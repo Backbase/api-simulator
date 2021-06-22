@@ -3,10 +3,9 @@ package com.backbase.api.simulator.prism;
 import com.backbase.api.simulator.config.ApiSimulatorConfiguration;
 import com.backbase.api.simulator.exception.PrismUnavailableException;
 import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +35,7 @@ public class PrismServer {
     private final String applicationName;
     private final RestTemplate restTemplate;
 
-    private final AtomicReference<CountDownLatch> processStartLatch = new AtomicReference<>(new CountDownLatch(0));
+    private final Semaphore processSemaphore = new Semaphore(1);
     private Process process;
     private boolean processSuccessful;
 
@@ -67,9 +66,12 @@ public class PrismServer {
      * @throws IOException If couldn't communicate with the Prism server.
      */
     @EventListener(ApplicationReadyEvent.class)
-    public void start() throws IOException {
-        this.processStartLatch.set(new CountDownLatch(1));
+    public void start() throws IOException, InterruptedException {
+        this.processSemaphore.acquire();
+        startPrism();
+    }
 
+    private void startPrism() throws IOException {
         ProcessBuilder processBuilder = configuration.getMode().buildProcess(configuration, serverPort);
         LOGGER.info("Executing prism with the following command: {}", processBuilder.command());
 
@@ -86,7 +88,7 @@ public class PrismServer {
      */
     public void onPrismStartResult(boolean success) {
         this.processSuccessful = success;
-        this.processStartLatch.get().countDown();
+        this.processSemaphore.release();
     }
 
     /**
@@ -99,13 +101,18 @@ public class PrismServer {
      */
     public void forward(HttpServletRequest request, HttpServletResponse response)
         throws InterruptedException, PrismUnavailableException {
-        if (this.processStartLatch.get().await(PROCESS_TIMEOUT, PROCESS_TIMEOUT_UNIT)) {
-            if (!processSuccessful) {
-                throw new PrismUnavailableException("Prism server didn't start successfully, cannot forward request");
+        try {
+            if (this.processSemaphore.tryAcquire(PROCESS_TIMEOUT, PROCESS_TIMEOUT_UNIT)) {
+                if (!processSuccessful) {
+                    throw new PrismUnavailableException(
+                        "Prism server didn't start successfully, cannot forward request");
+                }
+                doForward(request, response);
+            } else {
+                throw new PrismUnavailableException("Prism server is not ready yet, cannot forward request");
             }
-            doForward(request, response);
-        } else {
-            throw new PrismUnavailableException("Prism server is not ready yet, cannot forward request");
+        } finally {
+            this.processSemaphore.release();
         }
     }
 
@@ -147,9 +154,9 @@ public class PrismServer {
      * @throws IOException If couldn't communicate with the Prism server.
      */
     public void restart() throws InterruptedException, IOException {
-        if (this.processStartLatch.get().await(PROCESS_TIMEOUT, PROCESS_TIMEOUT_UNIT)) {
+        if (this.processSemaphore.tryAcquire(PROCESS_TIMEOUT, PROCESS_TIMEOUT_UNIT)) {
             stop();
-            start();
+            startPrism();
         }
     }
 
