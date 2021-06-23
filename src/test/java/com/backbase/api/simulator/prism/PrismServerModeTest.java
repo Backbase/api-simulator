@@ -1,18 +1,18 @@
 package com.backbase.api.simulator.prism;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.backbase.api.simulator.config.ApiSimulatorConfiguration;
 import com.backbase.api.simulator.config.ApiSimulatorConfigurations;
 import com.backbase.api.simulator.util.Paths;
 import com.google.common.collect.ImmutableList;
 import java.net.MalformedURLException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PrismServerModeTest {
+class PrismServerModeTest {
 
     @Test
-    public void testBuildProcessSimulationMode() {
+    void testBuildProcessSimulationMode() {
         ApiSimulatorConfiguration configuration = ApiSimulatorConfigurations.defaultConfig();
         int serverPort = 14080;
         ProcessBuilder processBuilder = PrismServerMode.SIMULATION.buildProcess(configuration, serverPort);
@@ -25,7 +25,7 @@ public class PrismServerModeTest {
     }
 
     @Test
-    public void testBuildProcessProxyMode() throws MalformedURLException {
+    void testBuildProcessProxyMode() throws MalformedURLException {
         ApiSimulatorConfiguration configuration = ApiSimulatorConfigurations.proxyMode();
         int serverPort = 14080;
         ProcessBuilder processBuilder = PrismServerMode.PROXY.buildProcess(configuration, serverPort);
