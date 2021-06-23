@@ -31,6 +31,8 @@ logging:
 
 backbase:
   security:
+    mtls:
+      enabled: false
     http:
       enabled: false
   api:

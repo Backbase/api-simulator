@@ -73,6 +73,29 @@
             <artifactId>service-sdk-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.backbase.dbs.ctrl</groupId>
+            <artifactId>arch</artifactId>
+            <version>${ctrl-shared-backend-library.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-archunit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- present to enable importing all available ArchUnit rules -->
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>events</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-starter-mapping</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- End - ArchUnit rule checks -->
     </dependencies>
 
     <build>

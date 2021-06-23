@@ -79,7 +79,7 @@ public class PrismServer {
         process = processBuilder.start();
         executor.execute(new PrismLogger(this, "Prism", process.getInputStream()));
         executor.execute(new PrismLogger(this, "Prism error", process.getErrorStream()));
-        LOGGER.debug("Prism command executed");
+        LOGGER.debug("Prism command executed: {}", processBuilder.command());
     }
 
     /**
