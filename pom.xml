@@ -76,7 +76,6 @@
         <dependency>
             <groupId>com.backbase.dbs.ctrl</groupId>
             <artifactId>arch</artifactId>
-            <version>${ctrl-shared-backend-library.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
