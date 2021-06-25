@@ -5,7 +5,7 @@
     <parent>
         <artifactId>ctrl-parent</artifactId>
         <groupId>com.backbase.dbs.ctrl</groupId>
-        <version>1.37</version>
+        <version>1.50</version>
     </parent>
 
     <groupId>com.backbase.api</groupId>
@@ -19,7 +19,7 @@
     </scm>
 
     <properties>
-        <prism.version>4.1.2</prism.version>
+        <prism.version>4.2.6</prism.version>
     </properties>
 
     <dependencies>
@@ -73,6 +73,28 @@
             <artifactId>service-sdk-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.backbase.dbs.ctrl</groupId>
+            <artifactId>arch</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-archunit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- present to enable importing all available ArchUnit rules -->
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>events</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-starter-mapping</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- End - ArchUnit rule checks -->
     </dependencies>
 
     <build>

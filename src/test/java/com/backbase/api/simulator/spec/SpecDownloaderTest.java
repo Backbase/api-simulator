@@ -2,7 +2,7 @@ package com.backbase.api.simulator.spec;
 
 import static com.backbase.api.simulator.config.ApiSimulatorConfigurations.defaultConfig;
 import static com.backbase.api.simulator.config.ApiSimulatorConfigurations.withSpec;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.headerDoesNotExist;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
@@ -12,8 +12,8 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 import com.backbase.api.simulator.config.ApiSimulatorConfiguration;
 import java.net.URI;
 import java.util.Optional;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,21 +21,21 @@ import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
-public class SpecDownloaderTest {
+class SpecDownloaderTest {
 
     private static final String API_SPEC_CONTENT = "api-spec-content";
 
     private RestTemplate restTemplate;
     private MockRestServiceServer mockServer;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         restTemplate = new RestTemplate();
         mockServer = MockRestServiceServer.createServer(restTemplate);
     }
 
     @Test
-    public void testDownloadFromArtifactoryWithAuthorization() {
+    void testDownloadFromArtifactoryWithAuthorization() {
         ApiSimulatorConfiguration config =
             withSpec("https://artifacts.backbase.com/specs/place-manager/place-manager-client-api-v2.0.0.yaml");
 
@@ -53,7 +53,7 @@ public class SpecDownloaderTest {
     }
 
     @Test
-    public void testDownloadFromDifferentDomain() {
+    void testDownloadFromDifferentDomain() {
         ApiSimulatorConfiguration config = withSpec("http://localhost:8080/test.yaml");
 
         mockServer.expect(ExpectedCount.once(),
@@ -70,7 +70,7 @@ public class SpecDownloaderTest {
     }
 
     @Test
-    public void testUnsuccessfulDownload() {
+    void testUnsuccessfulDownload() {
         ApiSimulatorConfiguration config = defaultConfig();
 
         mockServer.expect(ExpectedCount.once(),

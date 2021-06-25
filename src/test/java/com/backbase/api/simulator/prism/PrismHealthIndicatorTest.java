@@ -1,16 +1,16 @@
 package com.backbase.api.simulator.prism;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.actuate.health.Health;
 
-public class PrismHealthIndicatorTest {
+class PrismHealthIndicatorTest {
 
     @Test
-    public void testHealthy() {
+    void testHealthy() {
         PrismServer server = mock(PrismServer.class);
         when(server.isRunning()).thenReturn(true);
 
@@ -19,7 +19,7 @@ public class PrismHealthIndicatorTest {
     }
 
     @Test
-    public void testUnhealthy() {
+    void testUnhealthy() {
         PrismServer server = mock(PrismServer.class);
         when(server.isRunning()).thenReturn(false);
 
