@@ -5,7 +5,7 @@
     <parent>
         <artifactId>ctrl-parent</artifactId>
         <groupId>com.backbase.dbs.ctrl</groupId>
-        <version>1.50</version>
+        <version>1.51</version>
     </parent>
 
     <groupId>com.backbase.api</groupId>
@@ -126,6 +126,7 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
+                <version>${spotless-maven-plugin.version}</version>
                 <configuration combine.self="override">
                     <!-- Code formatting rules are only available internally, so it needs to be skipped for now -->
                     <skip>true</skip>
