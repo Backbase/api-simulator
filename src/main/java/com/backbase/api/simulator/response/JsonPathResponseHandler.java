@@ -7,7 +7,6 @@ import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.InvalidPathException;
 import com.jayway.jsonpath.JsonPath;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 
-public class JsonPathResponseHandler implements ResponseHandler {
+public class JsonPathResponseHandler extends AbstractResponseHandler implements ResponseHandler {
 
     static final String PATH_HEADER_PREFIX = "x-change-path";
     static final String KEY_HEADER_PREFIX = "x-change-key";
@@ -30,10 +29,9 @@ public class JsonPathResponseHandler implements ResponseHandler {
     @Override
     public void handleContent(HttpServletRequest originalRequest, HttpServletResponse originalResponse,
         ClientHttpResponse clientResponse) throws IOException {
-        String resultJson = "";
+        String resultJson;
         try {
-            DocumentContext context = replaceValue(originalRequest, clientResponse);
-            resultJson = context.jsonString();
+            resultJson = replaceValue(originalRequest, clientResponse).jsonString();
         } catch (IllegalArgumentException e) {
             originalResponse.setStatus(HttpStatus.BAD_REQUEST.value());
             String msg = String.format("Couldn't process JSONPath expression, missing or invalid parameters %s: %s",
@@ -46,16 +44,12 @@ public class JsonPathResponseHandler implements ResponseHandler {
             return;
         }
 
-        originalResponse.setStatus(clientResponse.getRawStatusCode());
-        clientResponse.getHeaders()
-            .forEach((key, value1) -> value1.forEach(value -> originalResponse.addHeader(key, value)));
+        copyResponseBeginning(originalResponse, clientResponse);
 
         int responseLength = resultJson.getBytes(originalResponse.getCharacterEncoding()).length;
         originalResponse.setHeader(HttpHeaders.CONTENT_LENGTH, Integer.toString(responseLength));
 
-        try (Writer writer = originalResponse.getWriter()) {
-            writer.write(resultJson);
-        }
+        HttpResponses.writeResponse(resultJson, originalResponse);
     }
 
     private DocumentContext replaceValue(HttpServletRequest originalRequest, ClientHttpResponse clientResponse)

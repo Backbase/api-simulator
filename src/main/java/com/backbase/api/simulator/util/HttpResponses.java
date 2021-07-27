@@ -1,8 +1,7 @@
 package com.backbase.api.simulator.util;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.Writer;
 import javax.servlet.http.HttpServletResponse;
 
 public class HttpResponses {
@@ -18,7 +17,7 @@ public class HttpResponses {
      * @throws IOException If an I/O error occurs while writing the content.
      */
     public static void writeResponse(String content, HttpServletResponse response) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(response.getOutputStream()))) {
+        try (Writer writer = response.getWriter()) {
             writer.write(content);
         }
     }

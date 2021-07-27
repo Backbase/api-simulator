@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.client.ClientHttpResponse;
 
-public class CopyResponseHandler implements ResponseHandler {
+public class CopyResponseHandler extends AbstractResponseHandler implements ResponseHandler {
 
     @Override
     public boolean shouldHandle(HttpServletRequest originalRequest) {
@@ -16,9 +16,7 @@ public class CopyResponseHandler implements ResponseHandler {
     @Override
     public void handleContent(HttpServletRequest originalRequest, HttpServletResponse originalResponse,
         ClientHttpResponse clientResponse) throws IOException {
-        originalResponse.setStatus(clientResponse.getRawStatusCode());
-        clientResponse.getHeaders()
-            .forEach((key, value1) -> value1.forEach(value -> originalResponse.addHeader(key, value)));
+        copyResponseBeginning(originalResponse, clientResponse);
         ByteStreams.copy(clientResponse.getBody(), originalResponse.getOutputStream());
     }
 }

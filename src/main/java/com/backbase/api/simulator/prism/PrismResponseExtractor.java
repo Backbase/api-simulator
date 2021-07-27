@@ -12,7 +12,7 @@ import org.springframework.web.client.ResponseExtractor;
 
 public class PrismResponseExtractor implements ResponseExtractor<Object> {
 
-    private static final ImmutableList<ResponseHandler> RESPONSE_HANDLERS = ImmutableList.of(
+    public static final ImmutableList<ResponseHandler> RESPONSE_HANDLERS = ImmutableList.of(
         new JsonPathResponseHandler(),
         new CopyResponseHandler()
     );
