@@ -14,6 +14,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 
+/**
+ * Uses the json-path library to parse the response as JSON and change a value in it according to given request
+ * headers.
+ */
 public class JsonPathResponseHandler extends AbstractResponseHandler implements ResponseHandler {
 
     static final String PATH_HEADER_PREFIX = "x-change-path";
@@ -52,6 +56,15 @@ public class JsonPathResponseHandler extends AbstractResponseHandler implements 
         HttpResponses.writeResponse(resultJson, originalResponse);
     }
 
+    /**
+     * Parses the original response as JSON and replaces a value in it according to request headers.
+     * JSON processing exceptions are handled by caller.
+     *
+     * @param originalRequest Original request.
+     * @param clientResponse Original response.
+     * @return Object representing the parsed and modified JSON.
+     * @throws IOException If an error occurs while reading the JSON.
+     */
     private DocumentContext replaceValue(HttpServletRequest originalRequest, ClientHttpResponse clientResponse)
         throws IOException {
         DocumentContext context = JsonPath.parse(clientResponse.getBody());
