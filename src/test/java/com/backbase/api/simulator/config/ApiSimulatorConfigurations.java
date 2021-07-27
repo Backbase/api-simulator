@@ -16,8 +16,8 @@ public class ApiSimulatorConfigurations {
         config.setPrismPath(Paths.get("target/prism"));
         config.setBasePath("/");
         config.setSpec(
-            "https://artifacts.backbase.com/specs/transaction-manager/transaction-manager-client-api-v2.0.0.yaml");
-        config.setSpecAuthorizations(ImmutableMap.of("artifacts.backbase.com", "authorization"));
+            "https://repo.backbase.com/native/specs/transaction-manager/transaction-manager-client-api-v2.5.0.yaml");
+        config.setSpecAuthorizations(ImmutableMap.of("repo.backbase.com", "authorization"));
         return config;
     }
 
@@ -25,12 +25,6 @@ public class ApiSimulatorConfigurations {
         ApiSimulatorConfiguration config = defaultConfig();
         config.setMode(PrismServerMode.PROXY);
         config.setDownstreamUrl(Optional.of(new URL("http://localhost:8080/places-service/client-api/v2")));
-        return config;
-    }
-
-    public static ApiSimulatorConfiguration withoutSpecAuthorization() {
-        ApiSimulatorConfiguration config = defaultConfig();
-        config.setSpecAuthorizations(ImmutableMap.of());
         return config;
     }
 

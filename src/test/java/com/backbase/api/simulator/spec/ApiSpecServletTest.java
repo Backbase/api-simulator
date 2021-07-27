@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Optional;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ class ApiSpecServletTest {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         ServletOutputStream outputStream = mock(ServletOutputStream.class);
-        when(response.getOutputStream()).thenReturn(outputStream);
+        when(response.getWriter()).thenReturn(new PrintWriter(outputStream));
     }
 
     @Test
