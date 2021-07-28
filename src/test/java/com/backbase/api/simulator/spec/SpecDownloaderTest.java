@@ -37,12 +37,12 @@ class SpecDownloaderTest {
     @Test
     void testDownloadFromArtifactoryWithAuthorization() {
         ApiSimulatorConfiguration config =
-            withSpec("https://artifacts.backbase.com/specs/place-manager/place-manager-client-api-v2.0.0.yaml");
+            withSpec("https://repo.backbase.com/native/specs/transaction-manager/transaction-manager-client-api-v2.5.0.yaml");
 
         mockServer.expect(ExpectedCount.once(),
             requestTo(URI.create(config.getSpec())))
             .andExpect(method(HttpMethod.GET))
-            .andExpect(header("X-JFrog-Art-Api", config.getSpecAuthorizations().get("artifacts.backbase.com")))
+            .andExpect(header("X-JFrog-Art-Api", config.getSpecAuthorizations().get("repo.backbase.com")))
             .andRespond(withStatus(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(API_SPEC_CONTENT));

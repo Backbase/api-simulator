@@ -129,7 +129,7 @@ public class PrismServer {
         }
 
         restTemplate.execute(url, HttpMethod.valueOf(request.getMethod()), new PrismRequestCallback(request),
-            new PrismResponseExtractor(response));
+            new PrismResponseExtractor(request, response));
     }
 
     /**
