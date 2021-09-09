@@ -25,7 +25,7 @@ public class JsonPathResponseHandler extends AbstractResponseHandler implements 
     static final String VALUE_HEADER_PREFIX = "x-change-value";
 
     @Override
-    public boolean shouldHandle(HttpServletRequest originalRequest) {
+    public boolean shouldHandle(HttpServletRequest originalRequest, ClientHttpResponse clientResponse) {
         return Streams.stream(originalRequest.getHeaderNames().asIterator())
             .anyMatch(name -> name.toLowerCase(Locale.ROOT).startsWith(PATH_HEADER_PREFIX));
     }

@@ -7,7 +7,7 @@ import org.springframework.http.client.ClientHttpResponse;
 
 public interface ResponseHandler {
 
-    boolean shouldHandle(HttpServletRequest originalRequest);
+    boolean shouldHandle(HttpServletRequest originalRequest, ClientHttpResponse clientResponse) throws IOException;
 
     void handleContent(HttpServletRequest originalRequest, HttpServletResponse originalResponse,
         ClientHttpResponse clientResponse) throws IOException;

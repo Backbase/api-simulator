@@ -27,7 +27,7 @@ class CopyResponseHandlerTest {
             HttpStatus.OK);
         clientResponse.getHeaders().add(HttpHeaders.CONTENT_TYPE, JSON_CONTENT_TYPE);
 
-        assertTrue(handler.shouldHandle(originalRequest));
+        assertTrue(handler.shouldHandle(originalRequest, clientResponse));
 
         handler.handleContent(originalRequest, originalResponse, clientResponse);
 

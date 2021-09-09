@@ -1,10 +1,12 @@
 package com.backbase.api.simulator.prism;
 
-import com.backbase.api.simulator.response.JsonPathResponseHandler;
 import com.backbase.api.simulator.response.CopyResponseHandler;
+import com.backbase.api.simulator.response.JsonPathResponseHandler;
+import com.backbase.api.simulator.response.NoContentResponseHandler;
 import com.backbase.api.simulator.response.ResponseHandler;
-import com.google.common.collect.ImmutableList;
 import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.client.ClientHttpResponse;
@@ -12,7 +14,8 @@ import org.springframework.web.client.ResponseExtractor;
 
 public class PrismResponseExtractor implements ResponseExtractor<Object> {
 
-    public static final ImmutableList<ResponseHandler> RESPONSE_HANDLERS = ImmutableList.of(
+    public static final List<ResponseHandler> RESPONSE_HANDLERS = List.of(
+        new NoContentResponseHandler(),
         new JsonPathResponseHandler(),
         new CopyResponseHandler()
     );
@@ -28,7 +31,13 @@ public class PrismResponseExtractor implements ResponseExtractor<Object> {
     @Override
     public Object extractData(ClientHttpResponse clientResponse) throws IOException {
         RESPONSE_HANDLERS.stream()
-            .filter(handler -> handler.shouldHandle(originalRequest))
+            .filter(handler -> {
+                try {
+                    return handler.shouldHandle(originalRequest, clientResponse);
+                } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            })
             .findFirst()
             .orElseThrow(() -> new IllegalStateException("Couldn't find response handler for " + originalRequest))
             .handleContent(originalRequest, originalResponse, clientResponse);
