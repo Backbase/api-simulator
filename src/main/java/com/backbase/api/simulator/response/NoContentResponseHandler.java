@@ -19,6 +19,8 @@ public class NoContentResponseHandler extends AbstractResponseHandler implements
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NoContentResponseHandler.class);
 
+    private static final String PRISM_GITHUB_ISSUE = "https://github.com/stoplightio/prism/issues/1618";
+
     @Override
     public boolean shouldHandle(HttpServletRequest originalRequest, ClientHttpResponse clientResponse)
         throws IOException {
@@ -30,7 +32,7 @@ public class NoContentResponseHandler extends AbstractResponseHandler implements
     public void handleContent(HttpServletRequest originalRequest, HttpServletResponse originalResponse,
         ClientHttpResponse clientResponse) {
         LOGGER.warn(
-            "Prism returned 406 response, converting it to 204 because it's probably caused by https://github.com/stoplightio/prism/issues/1618");
+            "Prism returned 406 response, converting it to 204 because it's probably caused by {}", PRISM_GITHUB_ISSUE);
         originalResponse.setStatus(HttpStatus.NO_CONTENT.value());
         clientResponse.getHeaders().entrySet().stream()
             .filter(entry -> !HttpHeaders.CONTENT_TYPE.equalsIgnoreCase(entry.getKey()))
