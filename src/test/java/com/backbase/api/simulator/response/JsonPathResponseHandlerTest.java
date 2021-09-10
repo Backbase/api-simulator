@@ -23,7 +23,7 @@ class JsonPathResponseHandlerTest {
     @Test
     void testShouldNotHandleMissingPath() {
         MockHttpServletRequest originalRequest = new MockHttpServletRequest();
-        assertFalse(handler.shouldHandle(originalRequest));
+        assertFalse(handler.shouldHandle(originalRequest, new MockClientHttpResponse(new byte[0], HttpStatus.OK)));
     }
 
     @Test
@@ -36,7 +36,7 @@ class JsonPathResponseHandlerTest {
             HttpStatus.OK);
         clientResponse.getHeaders().add(HttpHeaders.CONTENT_TYPE, JSON_CONTENT_TYPE);
 
-        assertTrue(handler.shouldHandle(originalRequest));
+        assertTrue(handler.shouldHandle(originalRequest, clientResponse));
 
         handler.handleContent(originalRequest, originalResponse, clientResponse);
 
@@ -58,7 +58,7 @@ class JsonPathResponseHandlerTest {
             HttpStatus.OK);
         clientResponse.getHeaders().add(HttpHeaders.CONTENT_TYPE, JSON_CONTENT_TYPE);
 
-        assertTrue(handler.shouldHandle(originalRequest));
+        assertTrue(handler.shouldHandle(originalRequest, clientResponse));
 
         handler.handleContent(originalRequest, originalResponse, clientResponse);
 
@@ -80,7 +80,7 @@ class JsonPathResponseHandlerTest {
             HttpStatus.OK);
         clientResponse.getHeaders().add(HttpHeaders.CONTENT_TYPE, JSON_CONTENT_TYPE);
 
-        assertTrue(handler.shouldHandle(originalRequest));
+        assertTrue(handler.shouldHandle(originalRequest, clientResponse));
 
         handler.handleContent(originalRequest, originalResponse, clientResponse);
 

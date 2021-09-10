@@ -9,7 +9,7 @@ import org.springframework.http.client.ClientHttpResponse;
 public class CopyResponseHandler extends AbstractResponseHandler implements ResponseHandler {
 
     @Override
-    public boolean shouldHandle(HttpServletRequest originalRequest) {
+    public boolean shouldHandle(HttpServletRequest originalRequest, ClientHttpResponse clientResponse) {
         return true;
     }
 
