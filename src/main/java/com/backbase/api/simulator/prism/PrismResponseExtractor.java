@@ -2,7 +2,6 @@ package com.backbase.api.simulator.prism;
 
 import com.backbase.api.simulator.response.CopyResponseHandler;
 import com.backbase.api.simulator.response.JsonPathResponseHandler;
-import com.backbase.api.simulator.response.NoContentResponseHandler;
 import com.backbase.api.simulator.response.ResponseHandler;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -15,7 +14,6 @@ import org.springframework.web.client.ResponseExtractor;
 public class PrismResponseExtractor implements ResponseExtractor<Object> {
 
     public static final List<ResponseHandler> RESPONSE_HANDLERS = List.of(
-        new NoContentResponseHandler(),
         new JsonPathResponseHandler(),
         new CopyResponseHandler()
     );
