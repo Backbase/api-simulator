@@ -10,12 +10,12 @@
 
     <groupId>com.backbase.api</groupId>
     <artifactId>api-simulator</artifactId>
-    <version>1.27-SNAPSHOT</version>
+    <version>1.27</version>
     <packaging>war</packaging>
 
     <scm>
         <developerConnection>scm:git:https://github.com/Backbase/api-simulator.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>api-simulator-1.27</tag>
     </scm>
 
     <properties>
