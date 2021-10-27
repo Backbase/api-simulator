@@ -34,6 +34,13 @@ public enum PrismServerMode {
                 "-h", "0.0.0.0",
                 "--errors");
         }
+    },
+
+    PERFORMANCE {
+        @Override
+        public ProcessBuilder buildProcess(ApiSimulatorConfiguration configuration, int serverPort) {
+            return null;
+        }
     };
 
     public abstract ProcessBuilder buildProcess(ApiSimulatorConfiguration configuration, int serverPort);

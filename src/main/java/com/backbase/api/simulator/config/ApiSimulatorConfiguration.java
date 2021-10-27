@@ -21,6 +21,8 @@ import org.springframework.web.client.RestTemplate;
 @Validated
 public class ApiSimulatorConfiguration {
 
+    public static final String MODE_CONFIG_KEY = "backbase.api.simulator.mode";
+
     /**
      * Port number prism will be listening on.
      */
