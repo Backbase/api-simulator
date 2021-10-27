@@ -1,7 +1,7 @@
 package com.backbase.api.simulator.prism;
 
 import com.backbase.api.simulator.config.ApiSimulatorConfiguration;
-import com.backbase.api.simulator.exception.PrismUnavailableException;
+import com.backbase.api.simulator.prism.exception.PrismUnavailableException;
 import java.io.IOException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Semaphore;
@@ -30,8 +30,8 @@ public class PrismServer {
     private static final TimeUnit PROCESS_TIMEOUT_UNIT = TimeUnit.SECONDS;
 
     private final ApiSimulatorConfiguration configuration;
+    private final PrismProcessBuilder prismProcessBuilder;
     private final Executor executor;
-    private final int serverPort;
     private final String applicationName;
     private final RestTemplate restTemplate;
 
@@ -43,17 +43,17 @@ public class PrismServer {
      * Creates a new instance of the server.
      *
      * @param configuration API Simulator Service configuration.
+     * @param prismProcessBuilder Builder for external prism processes.
      * @param executor Executor to use for async tasks.
-     * @param serverPort Port the API Simulator is listening on.
      * @param applicationName Application name the API Simulator is running under.
      */
     public PrismServer(ApiSimulatorConfiguration configuration,
+        PrismProcessBuilder prismProcessBuilder,
         @Qualifier("applicationTaskExecutor") Executor executor,
-        @Value("${server.port}") int serverPort,
         @Value("${spring.application.name}") String applicationName) {
         this.configuration = configuration;
+        this.prismProcessBuilder = prismProcessBuilder;
         this.executor = executor;
-        this.serverPort = serverPort;
         this.applicationName = applicationName;
         this.restTemplate = new RestTemplate();
         this.restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
@@ -73,7 +73,7 @@ public class PrismServer {
     }
 
     private void startPrism() throws IOException {
-        ProcessBuilder processBuilder = configuration.getMode().buildProcess(configuration, serverPort);
+        ProcessBuilder processBuilder = prismProcessBuilder.buildProcess();
         LOGGER.info("Executing prism with the following command: {}", processBuilder.command());
 
         process = processBuilder.start();

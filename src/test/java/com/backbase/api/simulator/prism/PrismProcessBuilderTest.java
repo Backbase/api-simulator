@@ -9,13 +9,14 @@ import com.google.common.collect.ImmutableList;
 import java.net.MalformedURLException;
 import org.junit.jupiter.api.Test;
 
-class PrismServerModeTest {
+class PrismProcessBuilderTest {
 
     @Test
     void testBuildProcessSimulationMode() {
         ApiSimulatorConfiguration configuration = ApiSimulatorConfigurations.defaultConfig();
         int serverPort = 14080;
-        ProcessBuilder processBuilder = PrismServerMode.SIMULATION.buildProcess(configuration, serverPort);
+        PrismProcessBuilder prismProcessBuilder = new PrismProcessBuilder(configuration, serverPort);
+        ProcessBuilder processBuilder = prismProcessBuilder.buildProcess();
         ImmutableList<String> expected = ImmutableList.of(
             Paths.getAbsolutePath(configuration.getPrismPath()), "mock",
             Paths.getSpecPath(configuration.getSpec(), serverPort),
@@ -28,7 +29,8 @@ class PrismServerModeTest {
     void testBuildProcessProxyMode() throws MalformedURLException {
         ApiSimulatorConfiguration configuration = ApiSimulatorConfigurations.proxyMode();
         int serverPort = 14080;
-        ProcessBuilder processBuilder = PrismServerMode.PROXY.buildProcess(configuration, serverPort);
+        PrismProcessBuilder prismProcessBuilder = new PrismProcessBuilder(configuration, serverPort);
+        ProcessBuilder processBuilder = prismProcessBuilder.buildProcess();
         ImmutableList<String> expected = ImmutableList.of(
             Paths.getAbsolutePath(configuration.getPrismPath()), "proxy",
             Paths.getSpecPath(configuration.getSpec(), serverPort),

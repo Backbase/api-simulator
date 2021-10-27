@@ -1,11 +1,12 @@
 package com.backbase.api.simulator.config;
 
-import com.backbase.api.simulator.ApiSimulatorServlet;
+import com.backbase.api.simulator.prism.servlet.ApiSimulatorServlet;
 import com.backbase.api.simulator.prism.PrismHealthIndicator;
+import com.backbase.api.simulator.prism.PrismProcessBuilder;
 import com.backbase.api.simulator.prism.PrismReloader;
 import com.backbase.api.simulator.prism.PrismServer;
-import com.backbase.api.simulator.spec.ApiSpecServlet;
-import com.backbase.api.simulator.spec.SpecDownloader;
+import com.backbase.api.simulator.prism.servlet.ApiSpecServlet;
+import com.backbase.api.simulator.prism.spec.SpecDownloader;
 import java.util.concurrent.Executor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,10 +22,16 @@ public class PrismServerConfiguration {
 
     @Bean
     PrismServer prismServer(ApiSimulatorConfiguration configuration,
+        PrismProcessBuilder prismProcessBuilder,
         @Qualifier("applicationTaskExecutor") Executor executor,
-        @Value("${server.port}") int serverPort,
         @Value("${spring.application.name}") String applicationName) {
-        return new PrismServer(configuration, executor, serverPort, applicationName);
+        return new PrismServer(configuration, prismProcessBuilder, executor, applicationName);
+    }
+
+    @Bean
+    PrismProcessBuilder prismProcessBuilder(ApiSimulatorConfiguration configuration,
+        @Value("${server.port}") int serverPort) {
+        return new PrismProcessBuilder(configuration, serverPort);
     }
 
     @Bean

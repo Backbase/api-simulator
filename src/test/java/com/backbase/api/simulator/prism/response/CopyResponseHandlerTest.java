@@ -1,4 +1,4 @@
-package com.backbase.api.simulator.response;
+package com.backbase.api.simulator.prism.response;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

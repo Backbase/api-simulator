@@ -1,9 +1,10 @@
-package com.backbase.api.simulator.spec;
+package com.backbase.api.simulator.prism.servlet;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.backbase.api.simulator.prism.spec.SpecDownloader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;

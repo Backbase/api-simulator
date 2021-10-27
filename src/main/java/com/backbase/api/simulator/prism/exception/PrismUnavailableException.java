@@ -1,4 +1,4 @@
-package com.backbase.api.simulator.exception;
+package com.backbase.api.simulator.prism.exception;
 
 public class PrismUnavailableException extends Exception {
 

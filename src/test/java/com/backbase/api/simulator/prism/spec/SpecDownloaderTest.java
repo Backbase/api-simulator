@@ -1,4 +1,4 @@
-package com.backbase.api.simulator.spec;
+package com.backbase.api.simulator.prism.spec;
 
 import static com.backbase.api.simulator.config.ApiSimulatorConfigurations.defaultConfig;
 import static com.backbase.api.simulator.config.ApiSimulatorConfigurations.withSpec;

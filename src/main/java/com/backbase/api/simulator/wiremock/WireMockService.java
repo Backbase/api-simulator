@@ -20,15 +20,15 @@ public class WireMockService {
 
     @EventListener(ApplicationReadyEvent.class)
     public void start() {
-        logger.info("Starting WireMock server");
+        logger.info("Starting WireMock server with [{}] mappings", server.getStubMappings().size());
         server.start();
-        logger.info("WireMock server has started successfully");
+        logger.info("WireMock server has started successfully on port [{}] with [{}] mappings", server.port(),
+            server.getStubMappings().size());
     }
 
     @PreDestroy
     public void stop() {
-        logger.info("Stopping WireMock server");
+        logger.info("Stopping WireMock server on port [{}]", server.port());
         server.stop();
-        logger.info("WireMock server has stopped successfully");
     }
 }

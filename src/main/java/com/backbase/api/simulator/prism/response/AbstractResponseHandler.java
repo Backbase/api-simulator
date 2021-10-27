@@ -1,4 +1,4 @@
-package com.backbase.api.simulator.response;
+package com.backbase.api.simulator.prism.response;
 
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-package com.backbase.api.simulator.spec;
+package com.backbase.api.simulator.prism.spec;
 
 import com.backbase.api.simulator.config.ApiSimulatorConfiguration;
 import java.net.URI;

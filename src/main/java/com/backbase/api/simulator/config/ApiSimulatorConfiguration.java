@@ -1,6 +1,5 @@
 package com.backbase.api.simulator.config;
 
-import com.backbase.api.simulator.prism.PrismServerMode;
 import com.google.common.collect.ImmutableMap;
 import java.net.URL;
 import java.nio.file.Path;
@@ -57,7 +56,7 @@ public class ApiSimulatorConfiguration {
      * Execution mode of prism.
      */
     @NotNull
-    private PrismServerMode mode;
+    private ServerMode mode;
 
     /**
      * URL of downstream service if mode is PROXY.
@@ -109,11 +108,11 @@ public class ApiSimulatorConfiguration {
         this.specAuthorizations = specAuthorizations;
     }
 
-    public PrismServerMode getMode() {
+    public ServerMode getMode() {
         return mode;
     }
 
-    public void setMode(PrismServerMode mode) {
+    public void setMode(ServerMode mode) {
         this.mode = mode;
     }
 

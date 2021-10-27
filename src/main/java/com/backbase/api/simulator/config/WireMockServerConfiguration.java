@@ -20,6 +20,7 @@ public class WireMockServerConfiguration {
     /**
      * Provides configuration tuned for running WireMock in performance tests.
      *
+     * @param configuration Service configuration.
      * @return Performance focused WireMock configuration.
      */
     @Bean
