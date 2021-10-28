@@ -42,9 +42,8 @@ public class ApiSimulatorConfiguration {
     private Path prismPath;
 
     /**
-     * File path or URL of API specification to be used.
+     * File path or URL of API specification to be used if mode is SIMULATION or PROXY.
      */
-    @NotBlank
     private String spec;
 
     /**
@@ -62,6 +61,11 @@ public class ApiSimulatorConfiguration {
      * URL of downstream service if mode is PROXY.
      */
     private Optional<URL> downstreamUrl = Optional.empty();
+
+    /**
+     * Directory containing a "mappings" directory with JSON files for WireMock.
+     */
+    private String mappingsDirectory = "/config";
 
     @Bean
     RestTemplate restTemplate() {
@@ -122,5 +126,13 @@ public class ApiSimulatorConfiguration {
 
     public void setDownstreamUrl(Optional<URL> downstreamUrl) {
         this.downstreamUrl = downstreamUrl;
+    }
+
+    public String getMappingsDirectory() {
+        return mappingsDirectory;
+    }
+
+    public void setMappingsDirectory(String mappingsDirectory) {
+        this.mappingsDirectory = mappingsDirectory;
     }
 }

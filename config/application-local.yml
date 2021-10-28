@@ -40,4 +40,3 @@ backbase:
       refreshSchedule: "-"
       prismPath: target/prism
       spec: config/openapi.yaml
-      mode: PERFORMANCE

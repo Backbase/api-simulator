@@ -33,7 +33,7 @@ public class WireMockServerConfiguration {
             .jettyHeaderBufferSize(16 * 1024)
             .asynchronousResponseEnabled(true)
             .asynchronousResponseThreads(20)
-            .usingFilesUnderClasspath(".")
+            .usingFilesUnderDirectory(configuration.getMappingsDirectory())
             .disableRequestJournal();
     }
 }
