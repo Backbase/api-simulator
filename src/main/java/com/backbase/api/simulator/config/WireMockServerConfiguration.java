@@ -2,6 +2,7 @@ package com.backbase.api.simulator.config;
 
 import com.backbase.api.simulator.wiremock.WireMockService;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +35,7 @@ public class WireMockServerConfiguration {
             .asynchronousResponseEnabled(true)
             .asynchronousResponseThreads(20)
             .usingFilesUnderDirectory(configuration.getMappingsDirectory())
-            .disableRequestJournal();
+            .disableRequestJournal()
+            .extensions(new ResponseTemplateTransformer(false));
     }
 }
