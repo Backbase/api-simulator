@@ -15,9 +15,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.client.RestTemplate;
 
+@Validated
 @Configuration
 @ConfigurationProperties(prefix = "backbase.api.simulator")
-@Validated
 public class ApiSimulatorConfiguration {
 
     public static final String MODE_CONFIG_KEY = "backbase.api.simulator.mode";
