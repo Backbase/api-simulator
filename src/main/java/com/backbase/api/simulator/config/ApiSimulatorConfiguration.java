@@ -52,7 +52,7 @@ public class ApiSimulatorConfiguration {
     private Map<String, String> specAuthorizations = ImmutableMap.of();
 
     /**
-     * Execution mode of prism.
+     * Execution mode.
      */
     @NotNull
     private ServerMode mode;

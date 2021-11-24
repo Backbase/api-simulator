@@ -28,7 +28,7 @@ The following properties are always configured:
 
 One of the following needs to be configured:
 
-- `backbase.api.simulator.spec`: OpenAPI specification file path or URL that will be simulated
+- `backbase.api.simulator.spec`: OpenAPI specification file path or URL for Prism that will be simulated
 - `mappings directory`: directory containing stub mappings for WireMock
 
 ## Known issues

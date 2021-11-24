@@ -40,3 +40,4 @@ backbase:
       refreshSchedule: "-"
       prismPath: target/prism
       spec: config/openapi.yaml
+      mappingsDirectory: config
