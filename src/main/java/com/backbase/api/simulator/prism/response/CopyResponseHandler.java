@@ -1,4 +1,4 @@
-package com.backbase.api.simulator.response;
+package com.backbase.api.simulator.prism.response;
 
 import com.google.common.io.ByteStreams;
 import java.io.IOException;

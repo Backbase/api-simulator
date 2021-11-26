@@ -1,4 +1,4 @@
-package com.backbase.api.simulator.response;
+package com.backbase.api.simulator.prism.response;
 
 import com.backbase.api.simulator.util.HttpResponses;
 import com.google.common.collect.ImmutableList;

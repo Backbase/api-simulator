@@ -1,6 +1,5 @@
 package com.backbase.api.simulator.config;
 
-import com.backbase.api.simulator.prism.PrismServerMode;
 import com.google.common.collect.ImmutableMap;
 import java.net.URL;
 import java.nio.file.Path;
@@ -16,10 +15,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.client.RestTemplate;
 
+@Validated
 @Configuration
 @ConfigurationProperties(prefix = "backbase.api.simulator")
-@Validated
 public class ApiSimulatorConfiguration {
+
+    public static final String MODE_CONFIG_KEY = "backbase.api.simulator.mode";
 
     /**
      * Port number prism will be listening on.
@@ -41,9 +42,8 @@ public class ApiSimulatorConfiguration {
     private Path prismPath;
 
     /**
-     * File path or URL of API specification to be used.
+     * File path or URL of API specification to be used if mode is SIMULATION or PROXY.
      */
-    @NotBlank
     private String spec;
 
     /**
@@ -52,15 +52,20 @@ public class ApiSimulatorConfiguration {
     private Map<String, String> specAuthorizations = ImmutableMap.of();
 
     /**
-     * Execution mode of prism.
+     * Execution mode.
      */
     @NotNull
-    private PrismServerMode mode;
+    private ServerMode mode;
 
     /**
      * URL of downstream service if mode is PROXY.
      */
     private Optional<URL> downstreamUrl = Optional.empty();
+
+    /**
+     * Directory containing a "mappings" directory with JSON files for WireMock.
+     */
+    private String mappingsDirectory = "/config";
 
     @Bean
     RestTemplate restTemplate() {
@@ -107,11 +112,11 @@ public class ApiSimulatorConfiguration {
         this.specAuthorizations = specAuthorizations;
     }
 
-    public PrismServerMode getMode() {
+    public ServerMode getMode() {
         return mode;
     }
 
-    public void setMode(PrismServerMode mode) {
+    public void setMode(ServerMode mode) {
         this.mode = mode;
     }
 
@@ -121,5 +126,13 @@ public class ApiSimulatorConfiguration {
 
     public void setDownstreamUrl(Optional<URL> downstreamUrl) {
         this.downstreamUrl = downstreamUrl;
+    }
+
+    public String getMappingsDirectory() {
+        return mappingsDirectory;
+    }
+
+    public void setMappingsDirectory(String mappingsDirectory) {
+        this.mappingsDirectory = mappingsDirectory;
     }
 }

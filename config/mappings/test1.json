@@ -1,0 +1,18 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/some/thing"
+  },
+  "response": {
+    "status": 200,
+    "body": "Hello world!",
+    "headers": {
+      "Content-Type": "text/plain"
+    },
+    "delayDistribution": {
+      "type": "lognormal",
+      "median": 80,
+      "sigma": 0.4
+    }
+  }
+}

@@ -1,5 +1,6 @@
-package com.backbase.api.simulator.spec;
+package com.backbase.api.simulator.prism.servlet;
 
+import com.backbase.api.simulator.prism.spec.SpecDownloader;
 import com.backbase.api.simulator.util.HttpResponses;
 import java.io.IOException;
 import java.util.Optional;

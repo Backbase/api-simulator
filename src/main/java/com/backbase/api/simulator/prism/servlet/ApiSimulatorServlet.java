@@ -1,6 +1,6 @@
-package com.backbase.api.simulator;
+package com.backbase.api.simulator.prism.servlet;
 
-import com.backbase.api.simulator.exception.PrismUnavailableException;
+import com.backbase.api.simulator.prism.exception.PrismUnavailableException;
 import com.backbase.api.simulator.prism.PrismServer;
 import com.backbase.api.simulator.util.HttpResponses;
 import java.io.IOException;

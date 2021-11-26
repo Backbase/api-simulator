@@ -1,8 +1,8 @@
 package com.backbase.api.simulator.prism;
 
-import com.backbase.api.simulator.response.CopyResponseHandler;
-import com.backbase.api.simulator.response.JsonPathResponseHandler;
-import com.backbase.api.simulator.response.ResponseHandler;
+import com.backbase.api.simulator.prism.response.CopyResponseHandler;
+import com.backbase.api.simulator.prism.response.JsonPathResponseHandler;
+import com.backbase.api.simulator.prism.response.ResponseHandler;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.List;
