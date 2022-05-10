@@ -20,6 +20,7 @@
 
     <properties>
         <prism.version>4.5.0</prism.version>
+        <docker.distroless.image>gcr.io/distroless/java11-debian11@sha256:cee68b3f1900467d5326ec18572bf9a6f9e3a9a9f741b51a8c2f0b375677932e</docker.distroless.image>
     </properties>
 
     <dependencies>
