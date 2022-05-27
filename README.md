@@ -26,7 +26,7 @@ The following properties are always configured:
 
 - `spring.application.name`: name of the service that you'll simulate, `card-manager` for example
 - `backbase.api.simulator.specAuthorizations.domain-name`: map of domain name to access token to download OpenAPI spec,
-replace "domain-name" with the domain you'd like to configure
+replace `domain-name` with the domain you'd like to configure
 
 One of the following needs to be configured:
 
